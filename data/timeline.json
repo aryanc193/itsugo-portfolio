@@ -1,0 +1,189 @@
+[
+  {
+    "id": 1,
+    "year": "2019–2021",
+    "glow": "low",
+    "labelSide": "top",
+
+    "labelEN": "First Steps",
+    "labelJP": "最初の一歩",
+
+    "descriptionEN": "Aryan started programming in school through Python basics. This phase shaped his problem-solving mindset and introduced him to how software works at a fundamental level.",
+    "descriptionJP": "アリアンは学校でPythonの基礎からプログラミングを始めました。この時期に問題解決の考え方が身につき、ソフトウェアの仕組みを理解するための土台ができました。",
+
+    "projects": []
+  },
+
+  {
+    "id": 2,
+    "year": "2023",
+    "glow": "low",
+    "labelSide": "top",
+
+    "labelEN": "C Fundamentals",
+    "labelJP": "C言語の基礎",
+
+    "descriptionEN": "He learned C fundamentals, data structures, and low-level logic. These foundations strengthened his analytical thinking and made later high-level development much easier.",
+    "descriptionJP": "C言語の基礎やデータ構造、低レベルロジックを学びました。これらの基礎が分析的な思考を強化し、その後の高レベル開発をスムーズにしてくれました。",
+
+    "projects": [
+      "C-Tutorials",
+      "CPP_Tutorials",
+      "DSAL",
+      "Data-Structures-and-Algorithms"
+    ]
+  },
+
+  {
+    "id": 3,
+    "year": "2023",
+    "glow": "medium",
+    "labelSide": "top",
+
+    "labelEN": "Web Dev & Ciphers",
+    "labelJP": "Web開発とCiphers",
+
+    "descriptionEN": "Aryan built the official website for his college coding club (Ciphers). This shifted his mindset from learning code to building for real users, marking the true start of his web-development journey.",
+    "descriptionJP": "大学のコーディングクラブ「Ciphers」の公式サイトを制作しました。この経験により、“コードを学ぶ” から “実際に使われるものを作る” へ意識が変わり、Web開発の本格的なスタートとなりました。",
+
+    "projects": ["Ciphers", "NetflixClone"]
+  },
+
+  {
+    "id": 4,
+    "year": "2023–2024",
+    "glow": "medium",
+    "labelSide": "bottom",
+
+    "labelEN": "Capstone Season 1",
+    "labelJP": "カプストーン第一章",
+
+    "descriptionEN": "His first major wave of web projects—authentication, utilities, UI building, and consistent project delivery. This period taught him how to ship complete, functioning applications.",
+    "descriptionJP": "認証やユーティリティ、UI構築など多くのWebプロジェクトに取り組んだ時期です。アプリを最後まで作り切る力と、開発プロセスの基礎がここで身につきました。",
+
+    "projects": [
+      "To-do-List-WebApp",
+      "Login-authenticator-webapp",
+      "calculator-web-app",
+      "Weather-webapp-react",
+      "Stopwatch-webapp",
+      "Tic-tac-toe-reactjs",
+      "Tribute-Page---Vincent-van-Gogh"
+    ]
+  },
+
+  {
+    "id": 5,
+    "year": "2024",
+    "glow": "prime",
+    "labelSide": "bottom",
+
+    "labelEN": "Internship 1 — Svelte",
+    "labelJP": "インターン① ― Svelte",
+
+    "descriptionEN": "In his first internship, Aryan gained real industry experience—code quality, deadlines, version-control discipline, and collaborative workflows built around Svelte.",
+    "descriptionJP": "初めてのインターンでは、コード品質、期限管理、バージョン管理などの実務的なスキルを学び、Svelte中心のワークフローでチーム開発を経験しました。",
+
+    "projects": []
+  },
+
+  {
+    "id": 6,
+    "year": "2024",
+    "glow": "high",
+    "labelSide": "bottom",
+
+    "labelEN": "Internship 2 — React Native",
+    "labelJP": "インターン② ― React Native",
+
+    "descriptionEN": "Aryan deepened his mobile-development skills through extensive work with React Native—shipping production features and building reusable UI/UX patterns used across multiple client apps.",
+    "descriptionJP": "React Nativeを中心にモバイル開発を大きく経験しました。実際に使われる機能の開発や、複数アプリで再利用されるUI/UXパターンの構築にも取り組みました。",
+
+    "projects": [
+      "Bike-And-Car-Servicing-App",
+      "EV-Charging-Finder-App",
+      "Diet-Planner-App",
+      "Book-Movie-Tickets-App",
+      "Health-Check-Up-App",
+      "Home-Fitness-App",
+      "Gym-Fitness-App",
+      "Study-Prep-App",
+      "AI-Generated-Video-Upload-App",
+      "Job-Recruitment-App",
+      "Freelance-Work-App",
+      "One-Roof-Service",
+      "Notes-To-do-List-App",
+      "Real-Estate-App",
+      "Recipe-Book-App",
+      "Salon-App",
+      "Sport-Learning-App",
+      "Travel-Diary-App",
+      "Restaurant-App"
+    ]
+  },
+
+  {
+    "id": 7,
+    "year": "2024–2025",
+    "glow": "high",
+    "labelSide": "right",
+
+    "labelEN": "Capstone Season 2",
+    "labelJP": "カプストーン第二章",
+
+    "descriptionEN": "A refined personal-project phase where Aryan focused on cleaner architecture, better UX, and more thoughtful design—laying the groundwork for his major solo applications.",
+    "descriptionJP": "個人プロジェクトの質を高めた時期で、アーキテクチャの整備、UX改善、設計の工夫に重点を置きました。より大きなソロアプリへ進むための基盤が築かれました。",
+
+    "projects": [
+      "Book-Notes-Project",
+      "Find-Your-Poison",
+      "The-Simon-Game",
+      "BlogSite_CapstoneProject"
+    ]
+  },
+
+  {
+    "id": 8,
+    "year": "2025",
+    "glow": "prime",
+    "labelSide": "top",
+
+    "labelEN": "Myotrek",
+    "labelJP": "Myotrek",
+
+    "descriptionEN": "Aryan’s first major solo mobile project—a React Native fitness tracker with smooth UX, structured workout logging, and reliable state management.",
+    "descriptionJP": "初の本格的なソロモバイルプロジェクト。React Nativeで構築したフィットネストラッカーで、滑らかなUX、体系的な記録機能、堅牢な状態管理が特長です。",
+
+    "projects": ["Myotrek"]
+  },
+
+  {
+    "id": 9,
+    "year": "2025",
+    "glow": "high",
+    "labelSide": "top",
+
+    "labelEN": "Web3 Voyage",
+    "labelJP": "Web3 航海",
+
+    "descriptionEN": "A decentralized Google-Keep-style note app built with Motoko canisters and React. Aryan explored optimistic UI, stable-memory persistence, and cycle-efficient backend design.",
+    "descriptionJP": "MotokoカニスターとReactで構築した、Google Keep風の分散型メモアプリ。楽観的UI、安定メモリの永続化、効率的なバックエンド設計を実践的に学びました。",
+
+    "projects": ["keeper-dapp"]
+  },
+
+  {
+    "id": 10,
+    "year": "2025 → Now",
+    "glow": "prime",
+    "labelSide": "top",
+
+    "labelEN": "Present & Next",
+    "labelJP": "現在とその先へ",
+
+    "descriptionEN": "Aryan is currently focused on full-stack mastery, deploying production-ready apps, and preparing for the next step in his professional journey.",
+    "descriptionJP": "現在はフルスタック開発の深化や、プロダクション品質のアプリ展開に注力し、次のキャリアステップに向けて準備を進めています。",
+
+    "projects": []
+  }
+]

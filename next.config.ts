@@ -1,7 +1,15 @@
-import type { NextConfig } from "next";
+const withMDX = require('@next/mdx')({
+  extension: /\.mdx?$/,
+  options: {
+    // Optionally add remark and rehype plugins here
+    // See https://mdxjs.com/docs/getting-started/#installation
+  },
+});
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  // Your other Next.js configurations
 };
 
-export default nextConfig;
+module.exports = withMDX(nextConfig);

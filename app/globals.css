@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
+/* ------------------------------ */
+/* VARIABLES - LIGHT DEFAULT      */
+/* ------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #effdff;
+  --foreground: #111827;
+
+  --accent: #00eed0;
+  --accent-hover: #00eed0;
+
+  --subtle: #6b7280;
+  --muted: #3e3e3f;
+  --muted-black: #4e5158;
+
+  --hero1: #00ffd9;
+  --hero2: #0080ff;
+
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.1);
 }
 
+html.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --accent: #00ffd5;
+  --accent-hover: #00e0c0;
+
+  --subtle: #94a3b8;
+  --muted: #aaaab2;
+
+  --hero1: #00ffd9;
+  --hero2: #0080ff;
+
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.15);
+}
+
+/* ------------------------------ */
+/* TAILWIND THEME VALUES          */
+/* ------------------------------ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+
+  --color-subtle: var(--subtle);
+  --color-muted: var(--muted);
+  --color-muted-black: var(--muted-black);
+
+  --color-card-bg: var(--card-bg);
+  --color-border: var(--border);
+
+  --color-hero1: var(--hero1);
+  --color-hero2: var(--hero2);
+
+  --font-main: var(--font-inter);
+  --font-main2: var(--font-geist-mono);
+  --font-blog-body: var(--font-crimson); /* blog reading */
+  --font-blog-code: var(--font-jetbrains); /* code in MDX */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .backdrop-hack {
+    @apply absolute inset-0 -z-10;
+    content: "";
   }
 }
 
+/* ------------------------------ */
+/* GLOBAL STYLES                  */
+/* ------------------------------ */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* ======================================= */
+/* TIMELINE GLOW LEVELS                    */
+/* ======================================= */
+
+.timeline-glow-low {
+  box-shadow: 0 0 4px rgba(0, 255, 213, 0.3);
+}
+
+.timeline-glow-medium {
+  box-shadow: 0 0 6px rgba(0, 255, 213, 0.45), 0 0 10px rgba(0, 128, 255, 0.25);
+}
+
+.timeline-glow-high {
+  box-shadow: 0 0 10px rgba(0, 255, 213, 0.7), 0 0 16px rgba(0, 128, 255, 0.35);
+  animation: glowPulseHigh 3s ease-in-out infinite;
+}
+
+.timeline-glow-prime {
+  box-shadow: 0 0 14px rgba(0, 255, 213, 1), 0 0 25px rgba(0, 128, 255, 0.6),
+    0 0 40px rgba(0, 255, 213, 0.5);
+  animation: glowPulsePrime 1.5s ease-in-out infinite;
+}
+
+@keyframes glowPulseHigh {
+  0% {
+    box-shadow: 0 0 10px rgba(0, 255, 213, 0.7), 0 0 16px rgba(0, 128, 255, 1);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(0, 255, 213, 0.9), 0 0 22px rgba(0, 128, 255, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 213, 0.7), 0 0 16px rgba(0, 128, 255, 1);
+  }
+}
+
+@keyframes glowPulsePrime {
+  0% {
+    box-shadow: 0 0 14px rgba(0, 255, 213, 1), 0 0 25px rgba(0, 128, 255, 1),
+      0 0 40px rgba(0, 255, 213, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 213, 1), 0 0 36px rgba(0, 128, 255, 1),
+      0 0 55px rgba(0, 255, 213, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 14px rgba(0, 255, 213, 1), 0 0 25px rgba(0, 128, 255, 1),
+      0 0 40px rgba(0, 255, 213, 0.5);
+  }
+}
+
+/* ======================================= */
+/* NODE LABEL AND MODAL                    */
+/* ======================================= */
+
+@media (max-width: 480px) {
+  .node-label-wrapper {
+    transform: scale(1.5) !important;
+    transform-origin: top right !important;
+  }
+}
+
+@keyframes modalFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-animate {
+  animation: modalFade 0.25s ease-out forwards;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 20px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
 }

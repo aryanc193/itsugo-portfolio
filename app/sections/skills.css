@@ -1,0 +1,142 @@
+/* skills.css — simple top gradient + side fades, no inner glow */
+
+/* ---------- Slash (desktop hover) ---------- */
+.slash-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 255, 200, 0) 0%,
+    rgba(0, 255, 200, 0.35) 40%,
+    rgba(0, 180, 255, 0.5) 70%,
+    rgba(0, 255, 200, 0) 100%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.45s ease-out;
+  pointer-events: none;
+}
+.group:hover .slash-fill {
+  transform: translateX(120%);
+}
+
+/* ---------- Samurai sprite ---------- */
+.samurai-idle {
+  width: 128px;
+  height: 128px;
+  background-image: url("/character/samurai/Idle.png");
+  background-size: 768px 128px; /* full sprite sheet */
+  animation: samuraiWalk 1.5s steps(6) infinite;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+@keyframes samuraiWalk {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -768px 0;
+  }
+}
+
+/* ---------- Mobile tweaks: shorter slash + tap trigger ---------- */
+@media (max-width: 640px) {
+  .samurai-idle {
+    width: 65px;
+    height: 65px;
+    left: 50%;
+    top: 18%;
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.12;
+    position: absolute;
+  }
+
+  .slash-fill {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 255, 200, 0) 0%,
+      rgba(0, 255, 200, 0.4) 50%,
+      rgba(0, 255, 200, 0) 100%
+    );
+    transform: translateX(-80%);
+    transition: transform 0.28s ease-out;
+  }
+
+  .group:active .slash-fill,
+  .group:focus-within .slash-fill {
+    transform: translateX(80%);
+  }
+
+  .group:active {
+    transform: scale(1.02);
+  }
+}
+
+/* ---------- Skill card base (use this class on each card) ---------- */
+.skill-card {
+  position: relative;
+  overflow: hidden; /* clip internal content, keep pseudo-elements tidy */
+  /* no box-shadow here — intentionally blank to prevent inner glow */
+}
+
+/* Top border: center-blue → cyan at sides (simple) */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  top: 2;
+  left: 0;
+  right: 0;
+  border-radius: 30;
+
+  height: 2px; /* thickness of top stripe */
+  /* center = blue, sides = cyan */
+  background: linear-gradient(
+    90deg,
+    #00ffd9 0%,
+    #00ffd9 25%,
+    #0080ff 50%,
+    #00ffd9 75%,
+    #00ffd9 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Side vertical fades: cyan -> transparent (left & right strips).
+   We place two strip-gradients via background-image, positioned left & right.
+   Adjust strip width by changing background-size X value (currently 10px). */
+.skill-card::after {
+  content: "";
+  position: absolute;
+  top: 2;
+  bottom: 0;
+  left: 1;
+  right: 1;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 10;
+
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 255, 217, 0.95),
+      rgba(0, 255, 217, 0)
+    ),
+    linear-gradient(to bottom, rgba(0, 255, 217, 0.95), rgba(0, 255, 217, 0));
+  background-repeat: no-repeat, no-repeat;
+  /* left strip width, right strip width */
+  background-size: 2px 75%, 2px 75%;
+  background-position: left top, right top;
+}
+
+/* Small screens: slightly narrower side strips to avoid visual crowding */
+@media (max-width: 420px) {
+  .skill-card::after {
+    background-size: 2px 75%, 2px 75%;
+  }
+}
+
+/* Accessibility: keep pseudo-elements non-interactive for focus/keyboard */
+.skill-card:focus-within::before,
+.skill-card:focus-within::after {
+  pointer-events: none;
+}

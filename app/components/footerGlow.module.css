@@ -1,0 +1,64 @@
+/* CLIPPING WRAPPER */
+.wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden; /* Prevent horizontal overflow */
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* WIDE HORIZONTAL GLOW (BACKGROUND LAYER) */
+.footerGlow {
+  position: absolute;
+  bottom: -60px; /* farther down for a taller glow */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 140vw;
+  height: 300px; 
+
+  opacity: 0;
+  transition: opacity 1.3s ease, filter 1.3s ease;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 220, 0.32),
+    rgba(0, 200, 255, 0.26) 35%,
+    transparent 80%
+  );
+
+  filter: blur(90px);
+  z-index: -2;
+}
+
+/* CENTRAL ORB BEHIND EVERYTHING BUT LIGHTER/BRIGHTER */
+.footerOrb {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%) translateY(30%); /* slightly dipping lower */
+
+  width: 20%;
+  height: 60%;
+
+  border-radius: 50%;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.75),
+    /* brighter white center */ rgba(0, 255, 230, 0.75) 40%,
+    /* aqua tint */ rgba(0, 180, 255, 0.55) 60%,
+    transparent 100%
+  );
+
+  filter: blur(40px);
+  z-index: -3;
+  transition: opacity 1.3s ease, filter 1.4s ease;
+}
+
+/* ACTIVATE EVERYTHING */
+.active .footerGlow,
+.active .footerOrb {
+  opacity: 1;
+}

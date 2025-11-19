@@ -1,0 +1,217 @@
+---
+title: "Book Notes — Personal Reading Tracker"
+year: 2024
+id: 8
+repo: ""
+demo: ""
+tags:
+  - Node.js
+  - Express
+  - PostgreSQL
+  - Open Library API
+  - EJS
+seo: "A full-stack personal book tracker with notes, ratings, and automatic cover fetching using Node.js, Express, and PostgreSQL."
+---
+
+![Book Notes App](/projects/booknotes.png)
+
+# Book Notes — Case Study
+
+> A full-stack reading tracker built with Node.js, Express, PostgreSQL, and EJS.  
+> My own private space on the internet to store book notes, ratings, and reading history — complete with automatic book-cover fetching.
+
+---
+
+## Background / Why This Exists
+
+I’ve always wanted a dedicated corner of the internet where I can manage my own reading progress — not Goodreads, not some SaaS app, but something built entirely for _me_.
+
+I wanted:
+
+- a fast way to log finished books
+- a place to write my notes
+- a rating system
+- a clean UI
+- and something that feels “mine”
+
+That turned into **Book Notes**, a small but full-stack app with real authentication, database-backed CRUD operations, and a surprisingly fun retro-gold UI theme.
+
+---
+
+## Project Goal
+
+The goal for this project was to build a personal tool that would let me:
+
+- Add, edit, and delete books
+- Store title, author, rating, finished date, and notes
+- Auto-fetch cover images using **Open Library API**
+- Sort books by title, rating, or date
+- Protect actions behind a login
+- Keep everything inside a smooth, responsive UI
+
+It’s a simple idea, but it touches almost every core skill required in real backend development.
+
+---
+
+## My Role
+
+This project is fully built by me — design, backend, frontend, database, deployment.  
+My responsibilities included:
+
+- Designing the PostgreSQL schema
+- Writing all database queries
+- Setting up Express routing
+- Creating the custom middleware for authentication
+- Integrating Open Library API
+- Building the UI in EJS
+- Implementing sorting + filtering
+- Making the theme responsive
+- Handling sessions and protected routes
+
+It’s a solo-build, end-to-end.
+
+---
+
+## Architecture Overview
+
+### **Stack**
+
+- **Backend:** Node.js, Express
+- **View Engine:** EJS
+- **Database:** PostgreSQL
+- **API:** Open Library API for cover images
+- **Auth:** express-session
+- **Styling:** Custom CSS (retro-gold theme)
+- **Other:** method-override, dotenv
+
+### **Design Philosophy**
+
+The app uses traditional server-side rendering instead of React.  
+Every page is:
+
+- fast
+- lightweight
+- SEO-friendly
+- instantly loads with no hydration overhead
+
+It follows the clean MVC pattern:
+
+```
+models/ → database queries
+services/ → external APIs
+views/ → EJS templates
+routes → express logic
+index.js → main server
+```
+
+---
+
+## How It Works (Flow)
+
+1. User logs in using a simple session-based form.
+2. Once authenticated, they can access the dashboard.
+3. Adding a book triggers:
+   - validation
+   - optional cover lookup from Open Library
+   - insert into PostgreSQL
+4. Editing or deleting uses PATCH/DELETE via method-override.
+5. Sorting is done directly at the database level.
+6. EJS templates render the UI with updated results.
+
+A small example of auto-cover fetching:
+
+```
+const fetchCover = async (title) => {
+  const url = `https://openlibrary.org/search.json?title=${title}`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return data?.docs?.[0]?.cover_i
+    ? `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`
+    : null;
+};
+```
+
+This makes adding new books surprisingly effortless.
+
+---
+
+## Key Challenges & Solutions
+
+### **1. Handling cover-image fallback logic**
+
+Sometimes the Open Library API returned no results, missing indexes, or incorrect cover IDs.
+
+**Solution:**  
+Added graceful fallbacks — either use the provided URL or default to a placeholder.  
+The UI never breaks.
+
+---
+
+### **2. Designing an expressive database model**
+
+Books needed:
+
+- title
+- author
+- rating
+- finished date
+- notes (text)
+- cover (URL)
+- timestamps
+
+**Solution:**  
+Created a clean PostgreSQL schema and abstracted database logic into a separate `/models` folder.
+
+---
+
+### **3. Authentication without any frameworks**
+
+I didn’t want Passport.js or heavy OAuth — just a lightweight personal login.
+
+**Solution:**  
+Using `express-session` with a simple credential check stored in `.env` kept things fast, minimal, and perfect for a private dashboard.
+
+---
+
+### **4. Making retro-gold UI look premium**
+
+A retro-golden theme can look messy if done wrong.  
+It needed to feel subtle, modern, and cozy.
+
+**Solution:**
+
+- layered gradients
+- gold-accent hover transitions
+- pixel-inspired layout
+- soft shadows
+- animated burger menu for small screens
+
+This gave the app a warm identity instead of looking like boilerplate CSS.
+
+---
+
+## Outcomes / Learnings
+
+Book Notes ended up becoming one of my most practical personal tools.
+
+What I learned:
+
+- building a complete MVC architecture
+- structuring reusable server-side EJS components
+- integrating external APIs smoothly
+- designing session-based authentication
+- managing database schemas for CRUD apps
+- mobile-first UI thinking
+- clean routing and controller logic
+
+It’s a small project on the surface, but it taught me a lot about foundational backend engineering.
+
+---
+
+## Final Thoughts
+
+Book Notes wasn’t made for show, it was made for _use_.  
+It helped me understand real backend patterns, sharpen my database thinking, and build something I genuinely enjoy opening every day.
+
+It’s not a flashy “API toy”, it’s a full-stack personal tool, and one of my most meaningful builds.

@@ -1,0 +1,164 @@
+---
+title: "Myotrek — Mobile Fitness Tracker"
+year: 2025
+id: 8
+repo: "https://github.com/aryanc193/Myotrek"
+demo: "https://play.google.com/store/apps/details?id=com.myotrek.fitness"
+tags:
+  - React Native
+  - Expo
+  - Mobile
+seo: "A full React Native fitness tracker with personalized workout logging, stats, and smooth UX."
+---
+
+![Homepage screenshot](/projects/myotrek.png)
+
+# Myotrek — Case Study
+
+> A full React Native fitness tracker with personalized workout logging, stats, and smooth navigation.  
+> Built as a freelance project and deployed on both the Play Store and App Store.
+
+---
+
+## Background / Why This Matters
+
+This project came from a client who built a compact home-gym device that uses magnetic resistance to replicate gym-style training.  
+They needed a mobile app that could:
+
+- guide users through workouts
+- show proper form through embedded tutorial videos
+- log sets, reps, and volume
+- sync progress across devices
+
+It was a practical problem:  
+**a physical product needed a digital companion** to make the experience complete.
+
+---
+
+## Project Goal
+
+Build a mobile app that:
+
+- works smoothly on both Android and iOS
+- lets users log workouts and track stats
+- embeds YouTube tutorials for each exercise
+- stores data efficiently without recurring database costs
+- ships on time despite tight tooling and device constraints
+
+Since this was a freelance delivery, the app had to feel polished, intuitive, and reliable.
+
+---
+
+## My Role
+
+I handled all frontend engineering:
+
+- React Native (Expo SDK 52)
+- Workout screens, logging UI, and stats
+- Navigation, layout, and transitions
+- Embedded video flows
+- Local data structures for workouts
+- Coordination with backend (Firebase)
+
+A teammate managed Firebase auth, Firestore, and deployments.
+
+---
+
+## Architecture Overview
+
+### **Frontend**
+
+- React Native + Expo 52
+- Custom workout screens with set/rep/volume tracking
+- Local library file storing exercises, names, images, and tutorial links
+- Robust navigation setup for multi-screen flow
+- Visual stats and progress summaries
+
+### **Backend**
+
+- Firebase Authentication
+- Firestore for cloud sync
+- Expo EAS for builds and updates
+
+### **Content Storage**
+
+To avoid recurring database costs, we shipped a **local exercise library** inside the app bundle:
+
+- metadata
+- images
+- tutorial URLs
+- categories
+
+It kept the product lightweight and inexpensive to maintain.
+
+---
+
+## How It Works (Flow)
+
+1. User opens the app and logs in.
+2. Chooses a workout category or exercise.
+3. Tutorial video loads through a YouTube embed.
+4. User logs sets, reps, volume, or duration.
+5. Data syncs to Firebase (or is saved locally when offline).
+6. Stats and charts update automatically.
+7. Monthly leaderboards show top performers across metrics.
+
+The flow stays consistent across iOS and Android.
+
+---
+
+## Key Challenges & Solutions
+
+### **1. Tooling and Version Mismatches**
+
+**Problem:**  
+Expo, React Native, EAS, Play Store, and App Store tooling all demanded different versions and configs.  
+Builds would fail for reasons that weren’t obvious.
+
+**Solution:**  
+We rebuilt the environment using the latest Expo SDK, re-aligned packages, and followed documentation strictly.  
+Keeping everything on the most recent toolchain turned out to be the most stable approach.
+
+---
+
+### **2. Limited Development Hardware**
+
+**Problem:**  
+My personal laptop struggled during builds, and we had no macOS device initially for iOS deployment.
+
+**Solution:**  
+We optimized dev builds with lighter configs and eventually secured a MacBook towards the end of the project specifically for App Store deployment.  
+That made our final shipping window possible.
+
+---
+
+### **3. No Budget for Full Exercise Database**
+
+**Problem:**  
+The client didn’t want recurring costs for storing exercise metadata.
+
+**Solution:**  
+We embedded a local JSON-style library containing all workout definitions, images, and links.  
+This kept the app lightweight, predictable, and free to maintain.
+
+---
+
+## Outcomes / Learnings
+
+The app has been live for more than six months, with consistent usage and no production-breaking issues.  
+Delivering on both stores taught me:
+
+- store deployments require strict version discipline
+- Expo + EAS can handle full production pipelines
+- local libraries are a solid solution for early-stage products
+- cross-platform video embedding needs careful testing
+- reliable UX is more about predictability than complexity
+
+This project was a strong, real-world exercise in end-to-end mobile delivery.
+
+---
+
+# Final Thoughts
+
+Myotrek showed me what a complete mobile product cycle looks like: planning, building, aligning tools, shipping, and maintaining.  
+It wasn’t the largest project, but it demanded discipline with versions, builds, and cross-platform consistency — exactly the challenges that make mobile work interesting.

@@ -1,0 +1,133 @@
+.orbGlow {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  overflow-x: hidden;
+  pointer-events: none;
+  z-index: -10;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 220, 0.95) 0%,
+    rgba(0, 255, 220, 0.72) 25%,
+    rgba(0, 160, 255, 0.52) 55%,
+    rgba(0, 120, 200, 0.96) 75%,
+    transparent 100%
+  );
+
+  filter: blur(4px);
+  box-shadow: 0 0 160px 30px rgba(0, 255, 220, 0.1),
+    0 0 240px 70px rgba(0, 180, 255, 0.2);
+
+  animation: orbSpin 22s linear infinite;
+}
+
+.float {
+  animation: orbSpin 22s linear infinite, orbFloat 9s ease-in-out infinite;
+}
+
+/* Organic inside glow */
+.orbGlow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  animation: orbWave 13s ease-in-out infinite alternate,
+    orbGlowPulse 5s ease-in-out infinite, orbNoiseShift 7s ease-in-out infinite;
+  background: radial-gradient(
+      ellipse 65% 70% at 30% 40%,
+      rgba(0, 255, 240, 0.85),
+      rgba(0, 180, 255, 0.43) 60%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 50% 80% at 70% 65%,
+      rgb(0, 208, 255),
+      rgba(0, 110, 230, 0.68) 60%,
+      transparent 100%
+    );
+}
+
+@media (max-width: 640px) {
+  .mobileOrb {
+    width: var(--m-size, auto) !important;
+    height: var(--m-size, auto) !important;
+
+    top: var(--m-top, auto) !important;
+    bottom: var(--m-bottom, auto) !important;
+    left: var(--m-left, auto) !important;
+    right: var(--m-right, auto) !important;
+
+    opacity: var(--m-opacity, 1) !important;
+
+    transform: translateX(calc(var(--m-center-x, 0) * -50%))
+      translateY(calc(var(--m-center-y, 0) * -50%));
+
+    display: calc(var(--m-hide, 0) * none);
+  }
+}
+
+/* ===================== KEYFRAMES ===================== */
+
+/* subtle in-place spinning */
+@keyframes orbSpin {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+/* slow yin-yang like motion */
+@keyframes orbWave {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(-8deg) scale(1);
+  }
+}
+
+/* soft pulse */
+@keyframes orbGlowPulse {
+  0% {
+    opacity: 0.78;
+    filter: brightness(0.92);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.18);
+  }
+  100% {
+    opacity: 0.78;
+    filter: brightness(0.92);
+  }
+}
+
+/* noise displacement animation */
+@keyframes orbNoiseShift {
+  0% {
+    background-position: 40% 40%;
+  }
+  50% {
+    background-position: 60% 65%;
+  }
+  100% {
+    background-position: 40% 40%;
+  }
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translateX(-0%) translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-0%) translateY(-30%) scale(1.03);
+  }
+  100% {
+    transform: translateX(-0%) translateY(-50%) scale(1);
+  }
+}
