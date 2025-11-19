@@ -2,7 +2,7 @@
 .dog-idle {
   width: 48px;
   height: 48px;
-  background-image: url("/character/dog/idle.png");
+  background-image: url("/character/dog/Idle.png");
   background-size: 192px 48px; /* 4 frames horizontally */
   image-rendering: pixelated;
   animation: dogIdle 0.65s steps(4) infinite;

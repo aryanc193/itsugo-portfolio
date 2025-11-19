@@ -7,7 +7,7 @@
 .samurai-walk {
   width: 128px;
   height: 128px;
-  background-image: url("/character/samurai/walk.png");
+  background-image: url("/character/samurai/Walk.png");
   background-size: 1152px 128px; /* 128 * 9 */
   background-repeat: no-repeat;
   animation: samuraiWalk 1.25s steps(9) infinite;
@@ -22,7 +22,7 @@
 .dog-walk {
   width: 48px;
   height: 48px;
-  background-image: url("/character/dog/walk.png");
+  background-image: url("/character/dog/Walk.png");
   background-size: 288px 48px; /* 48 * 6 */
   background-repeat: no-repeat;
   animation: dogWalk 0.7s steps(6) infinite;
