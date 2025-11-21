@@ -1,6 +1,7 @@
 "use client";
 import "./notfound.css";
 import { useLanguage } from "../context/LanguageContext";
+import Orb from "@/app/components/Orb";
 
 export default function NotFound() {
   const { lang } = useLanguage();
@@ -30,9 +31,15 @@ export default function NotFound() {
         )}
       </p>
 
+      {/* CHARACTERS + ORB */}
       <div className="flex gap-12 items-center justify-center mb-12">
         <div className="-mt-15 samurai-walk pixelated scale-[2]" />
         <div className="mt-25 dog-walk pixelated scale-[2]" />
+
+        {/* ORB */}
+        <div className="scale-[0.2] opacity-100">
+          <Orb />
+        </div>
       </div>
 
       <a

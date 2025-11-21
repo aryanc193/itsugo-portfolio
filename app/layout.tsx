@@ -8,10 +8,14 @@ import {
   Crimson_Pro,
   JetBrains_Mono,
   Geist_Mono,
+  Montserrat,
 } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const crimson = Crimson_Pro({ subsets: ["latin"], variable: "--font-crimson" });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-monsterrat",
+});
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
@@ -59,7 +63,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${crimson.variable} ${jetbrains.variable} ${geistMono.variable} font-sans`}
+        className={`${inter.variable} ${montserrat.variable} ${jetbrains.variable} ${geistMono.variable} font-sans`}
       >
         <LanguageProvider>
           <NavbarWrapper />

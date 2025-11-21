@@ -60,7 +60,7 @@ html.dark {
 
   --font-main: var(--font-inter);
   --font-main2: var(--font-geist-mono);
-  --font-blog-body: var(--font-crimson); /* blog reading */
+  --font-blog-body: var(--font-montserrat); /* blog reading */
   --font-blog-code: var(--font-jetbrains); /* code in MDX */
 }
 
