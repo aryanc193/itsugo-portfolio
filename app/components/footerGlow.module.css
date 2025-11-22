@@ -15,7 +15,7 @@
   transform: translateX(-50%);
 
   width: 140vw;
-  height: 300px; 
+  height: 300px;
 
   opacity: 0;
   transition: opacity 1.3s ease, filter 1.3s ease;
@@ -47,8 +47,8 @@
   background: radial-gradient(
     circle at center,
     rgba(255, 255, 255, 0.75),
-    /* brighter white center */ rgba(0, 255, 230, 0.75) 40%,
-    /* aqua tint */ rgba(0, 180, 255, 0.55) 60%,
+    rgba(0, 255, 230, 0.75) 40%,
+    rgba(0, 180, 255, 0.55) 60%,
     transparent 100%
   );
 
@@ -61,4 +61,34 @@
 .active .footerGlow,
 .active .footerOrb {
   opacity: 1;
+}
+
+/* MOBILE-BOOSTED GLOW */
+@media (max-width: 640px) {
+  .footerGlow {
+    width: 200vw; /* wider glow for narrow screens */
+    height: 380px; /* bigger gradient area */
+    filter: blur(60px); /* lower blur = brighter on mobile */
+
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 255, 230, 0.48),
+      /* boosted brightness */ rgba(0, 200, 255, 0.4) 35%,
+      transparent 80%
+    );
+  }
+
+  .footerOrb {
+    width: 60vw;
+    height: 60vw; /* perfect circle sizing on mobile */
+
+    filter: blur(30px); /* less blur = more visible */
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.9),
+      /* much brighter center */ rgba(0, 255, 230, 0.85) 40%,
+      rgba(0, 180, 255, 0.65) 60%,
+      transparent 100%
+    );
+  }
 }

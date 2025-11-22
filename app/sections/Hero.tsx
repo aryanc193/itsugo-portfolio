@@ -20,8 +20,9 @@ export default function Hero() {
         mobileSize="clamp(150px, 8vw, 310px)"
         mobileTop="80%"
         mobileRight="20%"
-        mobileOpacity={0.7}
+        mobileOpacity={1}
         mobileFloat={true}
+        className="-z-10"
       />
 
       <div className="max-w-4xl mx-auto px-6 pt-32 md:pt-48 lg:pt-56 ">
