@@ -61,6 +61,19 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Analytics */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-D9FJ179D4P"
+        />
+        <Script id="google-analytics">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-D9FJ179D4P');
+          `}
+        </Script>
       </head>
       <body
         className={`${inter.variable} ${montserrat.variable} ${jetbrains.variable} ${geistMono.variable} font-sans`}
