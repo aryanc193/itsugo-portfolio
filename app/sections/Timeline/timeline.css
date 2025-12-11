@@ -1,0 +1,147 @@
+/* timeline.css */
+.timeline-svg {
+  overflow: visible; /* ensure no clipping */
+}
+
+/* base node variables + defaults */
+.timeline-node {
+  --dot-r: 6;
+  --dot-stroke: 1.2;
+  --click-r: 18;
+
+  --glow-scale: 1.12;
+  --pulse-duration: 2200ms;
+
+  font-family: Inter, ui-sans-serif, system-ui;
+  pointer-events: auto;
+}
+
+/* ensure CSS transforms on SVG elements behave as expected */
+.label-group,
+.node-glow-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* glow pulse animation */
+.node-glow-pulse {
+  animation: nodePulse var(--pulse-duration) ease-in-out infinite;
+  opacity: 0.55;
+}
+
+@keyframes nodePulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(var(--glow-scale));
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+}
+
+/* label appearance */
+.label-bg {
+  fill: rgba(255, 255, 255, 0.06);
+  stroke: rgba(0, 255, 220, 0.65);
+}
+
+.label-year {
+  font-size: 9px;
+  fill: rgba(255, 255, 255, 0.75);
+}
+
+.label-title {
+  font-size: 12px;
+  fill: #ffffff;
+  font-weight: 700;
+}
+
+/* side-specific small offsets if you want additional shifts */
+.side-left .label-group {
+  /* small nudge so left labels don't overlap path visually */
+  transform: translateX(-6px);
+}
+.side-right .label-group {
+  transform: translateX(6px);
+}
+
+/* glow intensity presets */
+.node-low {
+  --glow-scale: 1.05;
+  --pulse-duration: 2200ms;
+}
+.node-medium {
+  --glow-scale: 1.1;
+  --pulse-duration: 2200ms;
+}
+.node-high {
+  --glow-scale: 1.15;
+  --pulse-duration: 1800ms;
+}
+.node-prime {
+  --glow-scale: 1.25;
+  --pulse-duration: 1800ms;
+}
+
+/* responsive tweaks */
+@media (max-width: 768px) {
+  .label-title {
+    font-size: 11px;
+  }
+  .label-year {
+    font-size: 8px;
+  }
+  .node-glow-pulse {
+    animation-duration: 2400ms;
+  }
+}
+
+/* tweak on-hover scale if desired */
+.timeline-node:hover .node-glow-pulse {
+  transform: scale(1.18);
+  transition: transform 220ms ease;
+}
+
+/* small nudges applied after JS positioning */
+.side-top2 .label-offset {
+  transform: translateX(-36px) translateY(-20px);
+} /* move up a bit */
+.side-bottom2 .label-offset {
+  transform: translateX(-16px) translateY(50px);
+} /* move up a bit */
+.side-top .label-offset {
+  transform: translateY(-20px);
+} /* move up a bit */
+.side-bottom .label-offset {
+  transform: translateY(-16px);
+} /* move down */
+.side-left .label-offset {
+  transform: translateY(38px);
+} /* left */
+.side-right .label-offset {
+  transform: translateX(98px);
+} /* right */
+.side-right2 .label-offset {
+  transform: translateX(-8px) translateY(5px);
+} /* right */
+
+/* if you want different nudges for mobile */
+@media (max-width: 640px) {
+  .side-top .label-offset {
+    transform: translateY(-20px);
+  }
+  .side-bottom .label-offset {
+    transform: translateY(-20px);
+  }
+  .side-left .label-offset {
+    transform: translateX(-6px) translateY(50px);
+  }
+  .side-right .label-offset {
+    transform: translateX(80px);
+  }
+}

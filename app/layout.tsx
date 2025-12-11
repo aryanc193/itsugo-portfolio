@@ -10,6 +10,7 @@ import {
   Geist_Mono,
   Montserrat,
 } from "next/font/google";
+import GlobalRouteLoader from "./components/GlobalRouteLoader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({

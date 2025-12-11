@@ -8,6 +8,7 @@ import FooterGlowOrb from "../components/FooterGlowOrb";
 export default function Contact() {
   const { lang } = useLanguage();
   const isJP = lang === "jp";
+  const resumeHref = "/Aryan_Choudhary_Resume.pdf";
 
   return (
     <>
@@ -63,6 +64,19 @@ export default function Contact() {
                 {item.icon}
               </a>
             ))}
+          </div>
+
+          <div className="mb-8 mt-3">
+            <a
+              href={resumeHref}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-accent text-black font-medium rounded-xl hover:bg-accent-hover transition"
+              aria-label={isJP ? "履歴書をダウンロード" : "Download resume"}
+            >
+              {isJP ? "履歴書をダウンロード" : "Download resume"}
+            </a>
           </div>
         </div>
 

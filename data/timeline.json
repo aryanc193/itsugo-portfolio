@@ -76,7 +76,7 @@
     "id": 5,
     "year": "2024",
     "glow": "prime",
-    "labelSide": "bottom",
+    "labelSide": "bottom2",
 
     "labelEN": "Internship 1 — Svelte",
     "labelJP": "インターン① ― Svelte",
@@ -91,7 +91,7 @@
     "id": 6,
     "year": "2024",
     "glow": "high",
-    "labelSide": "bottom",
+    "labelSide": "right2",
 
     "labelEN": "Internship 2 — React Native",
     "labelJP": "インターン② ― React Native",
@@ -146,7 +146,7 @@
     "id": 8,
     "year": "2025",
     "glow": "prime",
-    "labelSide": "top",
+    "labelSide": "top2",
 
     "labelEN": "Myotrek",
     "labelJP": "Myotrek",
@@ -176,7 +176,7 @@
     "id": 10,
     "year": "2025 → Now",
     "glow": "prime",
-    "labelSide": "top",
+    "labelSide": "left",
 
     "labelEN": "Present & Next",
     "labelJP": "現在とその先へ",

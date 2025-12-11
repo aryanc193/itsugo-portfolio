@@ -1,8 +1,8 @@
 import { getBlogPosts } from "@/app/lib/getBlogPosts";
 import BlogClient from "./BlogClient";
 
-export default function BlogPage() {
-  const posts = getBlogPosts();
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
 
   return (
     <div className="w-full">
@@ -22,7 +22,7 @@ export default function BlogPage() {
           <a
             href="/"
             className="px-6 py-2 rounded-xl border border-white/10 
-             text-foreground bg-background/20 backdrop-blur-sm
+             text-white bg-white/20 backdrop-blur-sm
              hover:border-accent hover:text-accent transition"
           >
             {"Go back to the portfolio"}

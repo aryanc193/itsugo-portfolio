@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { compile } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import { useMDXComponents } from "@/mdx-components";
+import { notFound } from "next/navigation";
 
 export default async function BlogPost({
   params,
@@ -13,7 +14,9 @@ export default async function BlogPost({
   const { slug } = await params;
 
   const filePath = path.join(process.cwd(), "app/blog/posts", `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return <div>404 Not Found</div>;
+  if (!fs.existsSync(filePath)) {
+    notFound();
+  }
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);

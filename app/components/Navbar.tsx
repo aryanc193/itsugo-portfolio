@@ -12,6 +12,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { lang } = useLanguage();
   const isJP = lang === "jp";
+  const resumeHref = "/Aryan_Choudhary_Resume.pdf";
 
   return (
     <>
@@ -62,6 +63,17 @@ export default function Navbar() {
 
             <LanguageToggle />
             <DarkModeToggle />
+
+            <a
+              href={resumeHref}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-accent text-black font-medium rounded-xl hover:bg-accent-hover transition text-sm"
+              aria-label={isJP ? "履歴書をダウンロード" : "Download resume"}
+            >
+              {isJP ? "履歴書" : "Resume"}
+            </a>
           </div>
 
           {/* Burger toggle */}
@@ -81,7 +93,7 @@ export default function Navbar() {
             ${open ? "translate-y-20" : "-translate-y-full"}
           `}
         >
-          <div className="relative z-50 flex flex-col items-center gap-10 pt-28 text-center">
+          <div className="relative z-50 flex flex-col items-center gap-10 pt-28 text-center overflow-y">
             <Link
               href="/#about"
               onClick={() => setOpen(false)}
@@ -117,9 +129,21 @@ export default function Navbar() {
             >
               {isJP ? "連絡先" : "Contact"}
             </Link>
-
-            <LanguageToggle />
-            <DarkModeToggle />
+            <div className="flex flex-row gap-20">
+              <LanguageToggle />
+              <DarkModeToggle />
+            </div>
+            <a
+              href={resumeHref}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="mt-4 px-6 py-3 bg-accent text-black font-medium rounded-xl hover:bg-accent-hover transition text-lg"
+              aria-label={isJP ? "履歴書をダウンロード" : "Download resume"}
+            >
+              {isJP ? "履歴書をダウンロード" : "Download resume"}
+            </a>
           </div>
         </div>
       </nav>

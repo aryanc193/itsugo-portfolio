@@ -6,6 +6,7 @@ import { useLanguage } from "../context/LanguageContext";
 export default function Hero() {
   const { lang } = useLanguage();
   const isJP = lang === "jp";
+  const resumeHref = "/Aryan_Choudhary_Resume.pdf";
 
   return (
     <section
@@ -18,8 +19,8 @@ export default function Hero() {
         size="clamp(300px, 20vw, 540px)"
         float={true}
         mobileSize="clamp(150px, 8vw, 310px)"
-        mobileTop="80%"
-        mobileRight="20%"
+        mobileTop="25%"
+        mobileRight="5%"
         mobileOpacity={1}
         mobileFloat={true}
         className="-z-10"
@@ -86,6 +87,25 @@ export default function Hero() {
             "
           >
             {isJP ? "お問い合わせ" : "Get in Touch"}
+          </a>
+
+          <a
+            href={resumeHref}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3
+              border border-main 
+              text-main 
+              rounded-xl 
+              hover:bg-accent/20
+              hover:border-accent 
+              hover:text-accent 
+              transition
+              text-center"
+            aria-label={isJP ? "履歴書をダウンロード" : "Download resume"}
+          >
+            {isJP ? "履歴書をダウンロード" : "Download resume"}
           </a>
         </div>
       </div>

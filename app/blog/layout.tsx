@@ -1,5 +1,6 @@
 import { Inter, Crimson_Pro, JetBrains_Mono } from "next/font/google";
 import type { Metadata } from "next";
+import GlobalRouteLoader from "../components/GlobalRouteLoader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const crimson = Crimson_Pro({ subsets: ["latin"], variable: "--font-crimson" });
@@ -23,6 +24,7 @@ export default function BlogLayout({
       className={`${inter.variable} ${crimson.variable} ${jetbrains.variable}
       min-h-screen w-full relative`}
     >
+      <GlobalRouteLoader />
       {/* Wallpaper */}
       <div className="fixed inset-0 bg-[url('/blog-bg.png')] bg-cover bg-center blur-sm opacity-50" />
 

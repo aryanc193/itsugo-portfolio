@@ -40,7 +40,7 @@ export default function Orb({
   opacity = 1,
   className = "",
 
-  mobileSize,
+  mobileSize = "clamp(150px, 28vw, 320px)", // slightly smaller on mobile by default
   mobileTop,
   mobileBottom,
   mobileLeft,
@@ -48,7 +48,7 @@ export default function Orb({
   mobileCenterX,
   mobileCenterY,
   mobileFloat,
-  mobileOpacity,
+  mobileOpacity = 1, // <-- increased default mobile visibility
   mobileHidden = false,
 }: OrbProps) {
   /** DESKTOP INLINE STYLES */
@@ -64,13 +64,12 @@ export default function Orb({
     transform: `${centerX ? "translateX(-50%)" : ""} ${
       centerY ? "translateY(-50%)" : ""
     }`,
-    // custom properties passed to CSS for mobile usage
-    // (these do nothing on desktop)
+    // expose mobile values as CSS custom properties so your CSS module can read them
     ["--m-size" as any]: mobileSize,
-    ["--m-top" as any]: mobileTop,
-    ["--m-bottom" as any]: mobileBottom,
-    ["--m-left" as any]: mobileLeft,
-    ["--m-right" as any]: mobileRight,
+    ["--m-top" as any]: mobileTop ?? "unset",
+    ["--m-bottom" as any]: mobileBottom ?? "unset",
+    ["--m-left" as any]: mobileLeft ?? "unset",
+    ["--m-right" as any]: mobileRight ?? "unset",
     ["--m-opacity" as any]: mobileOpacity,
     ["--m-center-x" as any]: mobileCenterX ? 1 : 0,
     ["--m-center-y" as any]: mobileCenterY ? 1 : 0,
