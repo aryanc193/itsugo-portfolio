@@ -240,7 +240,7 @@ export default function SVGNode({
             y={-(boxH / 2) + 15}
             style={{
               fontSize: 9,
-              fill: "rgba(255,255,255,0.75)",
+              fill: "var(--subtle)",
               fontFamily: "Inter, ui-sans-serif, system-ui",
               pointerEvents: "none",
             }}
@@ -255,7 +255,7 @@ export default function SVGNode({
             style={{
               fontSize: 12,
               fontWeight: 700,
-              fill: "#ffffff",
+              fill: "var(--foreground)",
               fontFamily: "Inter, ui-sans-serif, system-ui",
               pointerEvents: "none",
             }}
