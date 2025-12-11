@@ -94,6 +94,11 @@ export default function TimelineSection() {
         <h2 className="text-4xl font-bold text-center">
           {isJP ? "ジャーニー" : "Journey"}
         </h2>
+        <p className="text-center text-subtle text-sm mt-2">
+          {isJP
+            ? "ノードをタップして詳細を見る"
+            : "Tap the nodes to explore each milestone"}
+        </p>
 
         {/* SVG Timeline */}
         <div className="relative w-full -ml-5 mt-20 aspect-[800/1000]">
