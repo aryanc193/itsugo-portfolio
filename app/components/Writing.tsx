@@ -37,6 +37,14 @@ export default function Writing({
     loadPosts();
   }, []);
 
+  function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short", // Dec
+      day: "2-digit", // 15
+      year: "numeric", // 2025
+    });
+  }
+
   return (
     <section
       id="blog"
@@ -98,17 +106,22 @@ export default function Writing({
                     : "Nothing written here yet."}
                 </div>
               )}
-
-              {personalPosts.slice(0, 3).map((post) => (
-                <BlogCard
-                  key={post.slug}
-                  title={post.title}
-                  description={post.description}
-                  date={post.date}
-                  href={`/blog/${post.slug}`}
-                  cover={post.cover}
-                />
-              ))}
+              {[...personalPosts]
+                .sort(
+                  (a, b) =>
+                    new Date(b.date).getTime() - new Date(a.date).getTime()
+                )
+                .slice(0, 3)
+                .map((post) => (
+                  <BlogCard
+                    key={post.slug}
+                    title={post.title}
+                    description={post.description}
+                    date={formatDate(post.date)} 
+                    href={`/blog/${post.slug}`}
+                    cover={post.cover}
+                  />
+                ))}
             </div>
           </div>
         </div>
