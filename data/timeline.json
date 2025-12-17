@@ -178,12 +178,17 @@
     "glow": "prime",
     "labelSide": "left",
 
-    "labelEN": "Present & Next",
-    "labelJP": "現在とその先へ",
+    "labelEN": "Present & Momentum",
+    "labelJP": "現在と前進",
 
-    "descriptionEN": "Aryan is currently focused on full-stack mastery, deploying production-ready apps, and preparing for the next step in his professional journey.",
-    "descriptionJP": "現在はフルスタック開発の深化や、プロダクション品質のアプリ展開に注力し、次のキャリアステップに向けて準備を進めています。",
+    "descriptionEN": "Focused on shipping production-ready full-stack systems, sharpening technical judgment, and building in short, high-intensity cycles. Open to the right next chapter where ownership and product thinking matter.",
+    "descriptionJP": "現在はプロダクション品質のフルスタック開発に取り組み、技術的判断力を磨きながら、高密度な短期開発サイクルで構築を続けています。オーナーシップとプロダクト思考を重視する次のステップに前向きです。",
 
-    "projects": []
+    "projects": [
+      "commentto",
+      "project-mgt-sys",
+      "video-editing-app",
+      "itsugo-portfolio"
+    ]
   }
 ]
