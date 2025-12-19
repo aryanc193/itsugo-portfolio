@@ -10,7 +10,6 @@ import {
   Geist_Mono,
   Montserrat,
 } from "next/font/google";
-import GlobalRouteLoader from "./components/GlobalRouteLoader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({
@@ -28,7 +27,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Aryan's Portfolio",
-  description: "Portfolio",
+  description: "Aryan Choudhary Portfolio",
 };
 
 export default function RootLayout({
