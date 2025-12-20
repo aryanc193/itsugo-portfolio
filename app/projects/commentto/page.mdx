@@ -1,0 +1,222 @@
+---
+title: "Commentto - AI Comment Generator Extension"
+year: 2025
+id: 10
+repo: "https://github.com/aryanc193/commentto"
+demo: ""
+tags:
+  - Chrome Extension
+  - AI
+  - Next.js
+  - Monorepo
+  - Vercel
+seo: "An AI-powered Chrome extension and web app that summarizes content and generates thoughtful comments in the user’s writing voice."
+---
+
+![Commentto live screenshot](/projects/commentto.png)
+
+# Commentto — Case Study
+
+> A Chrome extension + web app that summarizes long-form content and generates concise, thoughtful comments in the user’s writing voice.  
+> Designed for real-world usage, not prompt demos.
+
+---
+
+## Background / Why This Matters
+
+Engaging with long-form content (blogs, LinkedIn posts, essays) has a hidden cost:
+
+- reading takes time
+- writing thoughtful comments takes even more time
+- most AI tools produce generic, off-voice responses
+
+I wanted to explore what happens when:
+
+- **AI understands the content first**
+- **responses are conditioned on a strict “voice profile”**
+- **the tool lives directly in the browser**
+- **there is no account system or friction**
+
+The goal was to reduce the _activation energy_ of thoughtful engagement.
+
+---
+
+## Project Goal
+
+Build a system that:
+
+- extracts meaningful content from any webpage
+- summarizes it accurately
+- generates a short comment in a specific writing voice
+- works instantly from the browser
+- feels lightweight and disposable, not like a SaaS app
+
+---
+
+## My Role
+
+I built the entire system end-to-end:
+
+- Chrome extension (MV3 + Vite)
+- React popup UI
+- Background + content script communication
+- AI backend (Next.js API routes)
+- Voice modeling and prompt design
+- Monorepo architecture and deployment
+
+---
+
+## Architecture Overview
+
+### **Monorepo Structure**
+
+```txt
+commentto/
+├── apps/
+│   ├── web/          # Next.js app + API routes
+│   └── extension/    # Chrome extension (Vite + MV3)
+│
+├── packages/
+│   ├── types/        # Shared domain contracts
+│   ├── voices/       # Preset voice definitions
+│   ├── utils/        # Shared helpers
+│   └── ui/           # Reusable UI components
+```
+
+This structure ensured:
+
+- a single source of truth for voices and types
+- no duplication across web and extension
+- predictable imports via workspace packages
+- easy future expansion (API, mobile, paid tiers)
+
+---
+
+## How It Works (Flow)
+
+1. User clicks **Generate** in the extension popup.
+2. Background service worker injects a content script.
+3. Page text is extracted from `article`, `main`, or `body`.
+4. Content is sent to the production API.
+5. Backend:
+
+   - safely truncates input
+   - summarizes content
+   - generates a voice-conditioned comment
+
+6. Result is returned to the popup UI.
+
+The entire flow is designed to feel instant and local.
+
+---
+
+## AI & Voice Modeling
+
+### **Summarization**
+
+- Low temperature for stability
+- Opinion-free summaries
+- Explicit truncation guard for long pages
+
+### **Voice Profiles**
+
+Instead of vague prompts like _“be casual”_, each voice is defined as a **concrete profile** describing:
+
+- tone
+- sentence structure
+- behavioral rules
+
+This significantly reduced “voice drift” and made generations consistent across runs.
+
+---
+
+## Key Challenges & Solutions
+
+### **1. Chrome Extension MV3 + ESM**
+
+**Problem:**
+Service workers failed silently due to ESM vs classic script mismatch.
+
+**Solution:**
+
+- Explicitly marked the background worker as a module
+- Flattened build output for Chrome compatibility
+
+**Why it mattered:**
+Modern bundlers default to ESM, but MV3 requires precise configuration.
+
+---
+
+### **2. Monorepo Dependency Drift**
+
+**Problem:**
+Types and voice presets began drifting between web and extension.
+
+**Solution:**
+
+- Migrated to a pnpm workspace
+- Extracted shared logic into packages
+- Enforced lockfile correctness in CI
+
+**Why it mattered:**
+Prevented subtle runtime mismatches and simplified iteration.
+
+---
+
+### **3. Voice Consistency (“AI Voice Drift”)**
+
+**Problem:**
+Early generations felt similar across different voices.
+
+**Solution:**
+
+- Tightened prompt constraints
+- Made presets opinionated and explicit
+- Reduced model freedom where consistency mattered
+
+---
+
+## Browser Extension Design Philosophy
+
+I intentionally avoided:
+
+- user accounts
+- cloud persistence
+- onboarding flows
+- paid gates
+
+Instead, the extension is:
+
+- instant
+- local-first
+- private by default
+- usable without commitment
+
+Custom voices are stored using browser storage and persist across sessions.
+
+---
+
+## Outcomes / Learnings
+
+This project reinforced several lessons:
+
+- browser extensions surface real-world edge cases quickly
+- explicit prompt constraints matter more than clever wording
+- monorepos reduce complexity _when used intentionally_
+- product friction is often architectural, not UX-only
+- shipping across multiple surfaces changes how you design APIs
+
+---
+
+# Final Thoughts
+
+Commentto was not built as a tutorial clone or demo.
+
+It reflects:
+
+- real architectural trade-offs
+- production debugging
+- product-driven design decisions
+- thinking beyond a single UI surface
+
+It’s the kind of system I’d want to use daily — and the kind I enjoy building.

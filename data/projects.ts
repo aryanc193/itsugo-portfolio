@@ -2,19 +2,19 @@
 
 export const projects = [
   {
-    slug: "keeper-dapp",
-    titleEN: "Keeper D-App",
-    titleJP: "Keeper D-App",
+    slug: "commentto",
+    titleEN: "Commentto",
+    titleJP: "Commentto",
     descEN:
-      "A Google Keep–style notes app built with Motoko canisters and React, exploring optimistic UI patterns, stable-memory persistence, and the Internet Computer’s backend workflows.",
+      "An AI-powered Chrome extension and web app that summarizes long-form content and generates thoughtful comments in the user’s writing voice, designed for real-world browser usage.",
     descJP:
-      "Motoko カニスターと React で構築した Google Keep風のノートアプリ。楽観的 UI、安定メモリでの保存、Internet Computer を使ったバックエンド設計を実践的に学んだプロジェクト。",
-    img: "/projects/keeper.png",
+      "長文コンテンツを要約し、ユーザーの文体で自然なコメントを生成する AI 搭載 Chrome 拡張＋Web アプリ。実用性を重視したブラウザ常駐型ツール。",
+    img: "/projects/commentto.png",
     year: 2025,
     featured: true,
-    github: "https://github.com/aryanc193/keeper-dapp",
-    live: null,
-    caseStudy: "/projects/keeper-dapp",
+    github: "https://github.com/aryanc193/commentto",
+    live: "https://commentto-web.vercel.app",
+    caseStudy: "/projects/commentto",
   },
   {
     slug: "myotrek",
@@ -25,7 +25,7 @@ export const projects = [
     descJP:
       "React Native 製のフィットネストラッカー。ワークアウト記録、統計、滑らかなモバイル UX に対応。",
     img: "/projects/myotrek.png",
-    year: 2024,
+    year: 2025,
     featured: true,
     github: "https://github.com/aryanc193/Myotrek",
     live: "https://play.google.com/store/apps/details?id=com.myotrek.fitness&pcampaignid=web_share",
@@ -40,10 +40,10 @@ export const projects = [
     descJP:
       "Node.js・Express・PostgreSQL で構築した読書管理アプリ。読了本、評価、メモ、Open Library API の自動カバー取得に対応し、レトロゴールド調の UI を採用。",
     img: "/projects/booknotes.png",
-    year: 2024,
+    year: 2025,
     featured: true,
     github: "https://github.com/aryanc193/book-notes-project",
     live: null,
     caseStudy: "/projects/book-notes",
-  }
+  },
 ];
