@@ -7,124 +7,81 @@ import styles from "../components/orb.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function OrbScene() {
+export default function OrbScene({
+  scrollRef,
+}: {
+  scrollRef: React.RefObject<HTMLElement | null>;
+}) {
   const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const scroller = scrollRef.current ?? document.documentElement;
+
     const orb = orbRef.current;
     if (!orb) return;
 
-    // --- RESET (important during hot reloads)
     ScrollTrigger.getAll().forEach((t) => t.kill());
     gsap.killTweensOf(orb);
 
-    // --- Initial idle motion (time-based, not scroll)
+    // Initial position
+    gsap.set(orb, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
+
+    // Idle rotation (GSAP owns transform now)
     gsap.to(orb, {
-      rotation: 360,
+      rotate: 360,
       duration: 24,
       repeat: -1,
       ease: "linear",
     });
 
-    gsap.to(orb, {
-      yPercent: -6,
-      duration: 6,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-    });
-
-    // --- MASTER TIMELINE (scroll-driven)
+    // Scroll-driven motion
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: document.body,
+        trigger: scroller,
+        scroller,
         start: "top top",
         end: "bottom bottom",
         scrub: true,
+        markers: true, // keep for now
       },
     });
 
-    /*
-      Timeline structure (relative durations):
-      0–1   : Hero → About
-      1–2   : About → Projects
-      2–3   : Projects → Timeline start
-      3–6   : Follow timeline path (placeholder)
-      6–6.6 : End behavior
-    */
-
-    // Hero → About
     tl.to(orb, {
       x: "-10vw",
       y: "-6vh",
       scale: 0.9,
-      ease: "none",
       duration: 1,
     });
 
-    // About → Projects
     tl.to(orb, {
-      x: "-18vw",
-      y: "-10vh",
+      x: "-20vw",
+      y: "-12vh",
       scale: 0.75,
-      ease: "none",
       duration: 1,
     });
 
-    // Projects → Timeline start (final size)
-    tl.to(orb, {
-      x: "-26vw",
-      y: "-14vh",
-      scale: 0.6,
-      ease: "none",
-      duration: 1,
-    });
-
-    // Placeholder: timeline-follow region
-    tl.to(orb, {
-      x: "-30vw",
-      y: "8vh",
-      ease: "none",
-      duration: 2,
-    });
-
-    // End behavior (skills → stop/drop)
-    tl.to(orb, {
-      y: "14vh",
-      scale: 0.55,
-      ease: "power2.in",
-      duration: 0.6,
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-      gsap.killTweensOf(orb);
-    };
+    ScrollTrigger.refresh();
   }, []);
 
   return (
     <>
-      {/* FIXED ORB LAYER */}
       <div
         ref={orbRef}
-        className={`
-          fixed
-          right-[0vw]
-          top-1/2
-          -translate-y-1/2
-          z-50
-          ${styles.orbGlow}
-          ${styles.float}
-        `}
+        className={styles.orbGlow}
         style={{
-          width: 320,
-          height: 320,
-          pointerEvents: "none",
+          position: "fixed",
+          right: "20px",
+          width: "300px",
+          height: "300px",
+          zIndex: 9999,
         }}
       />
 
-      {/* Debug */}
-      <div className="fixed bottom-4 left-4 text-xs text-white/60 z-50">
+      <div className="fixed bottom-4 left-4 text-xs text-white z-[9999]">
         Orb Lab – Scroll to test
       </div>
     </>

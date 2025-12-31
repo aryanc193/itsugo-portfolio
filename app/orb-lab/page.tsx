@@ -1,34 +1,40 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useRef } from "react";
 
 const OrbScene = dynamic(() => import("./OrbScene"), {
   ssr: false,
 });
 
 export default function OrbLabPage() {
+  const scrollRef = useRef<HTMLElement | null>(null);
+
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      <OrbScene />
+    <main
+      ref={scrollRef}
+      className="relative min-h-screen overflow-y-auto"
+    >
+      <OrbScene scrollRef={scrollRef} />
 
       <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl">Hero</h1>
+        <h1>Hero</h1>
       </section>
 
       <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl">About</h1>
+        <h1>About</h1>
       </section>
 
       <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl">Projects</h1>
+        <h1>Projects</h1>
       </section>
 
       <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl">Timeline</h1>
+        <h1>Timeline</h1>
       </section>
 
       <section className="h-screen flex items-center justify-center">
-        <h1 className="text-4xl">Skills</h1>
+        <h1>Skills</h1>
       </section>
     </main>
   );
