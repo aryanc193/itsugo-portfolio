@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "../components/orb.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,42 +55,42 @@ export default function OrbScene() {
 
     // Hero → About
     tl.to(orb, {
-      x: "14vw",
+      x: "-10vw",
       y: "-6vh",
-      scale: 0.88,
+      scale: 0.9,
       ease: "none",
       duration: 1,
     });
 
     // About → Projects
     tl.to(orb, {
-      x: "26vw",
+      x: "-18vw",
       y: "-10vh",
-      scale: 0.72,
+      scale: 0.75,
       ease: "none",
       duration: 1,
     });
 
-    // Projects → Timeline start (FINAL SIZE)
+    // Projects → Timeline start (final size)
     tl.to(orb, {
-      x: "38vw",
+      x: "-26vw",
       y: "-14vh",
       scale: 0.6,
       ease: "none",
       duration: 1,
     });
 
-    // Placeholder: timeline-follow section
+    // Placeholder: timeline-follow region
     tl.to(orb, {
-      x: "46vw",
-      y: "10vh",
+      x: "-30vw",
+      y: "8vh",
       ease: "none",
-      duration: 3,
+      duration: 2,
     });
 
-    // End behavior (drop illusion)
+    // End behavior (skills → stop/drop)
     tl.to(orb, {
-      y: "18vh",
+      y: "14vh",
       scale: 0.55,
       ease: "power2.in",
       duration: 0.6,
@@ -106,19 +107,23 @@ export default function OrbScene() {
       {/* FIXED ORB LAYER */}
       <div
         ref={orbRef}
-        className="fixed left-[6vw] top-1/2 -translate-y-1/2 z-50"
+        className={`
+          fixed
+          right-[0vw]
+          top-1/2
+          -translate-y-1/2
+          z-50
+          ${styles.orbGlow}
+          ${styles.float}
+        `}
         style={{
-          width: 220,
-          height: 220,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle at 0% 100%, #00ffd6, #0088ff 100%, transparent 0%)",
-          filter: "blur(2px)",
+          width: 320,
+          height: 320,
           pointerEvents: "none",
         }}
       />
 
-      {/* Optional debug guide */}
+      {/* Debug */}
       <div className="fixed bottom-4 left-4 text-xs text-white/60 z-50">
         Orb Lab – Scroll to test
       </div>
