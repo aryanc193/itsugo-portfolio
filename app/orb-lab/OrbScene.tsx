@@ -3,87 +3,97 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import styles from "../components/orb.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function OrbScene({
-  scrollRef,
-}: {
-  scrollRef: React.RefObject<HTMLElement | null>;
-}) {
+export default function OrbScene() {
   const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const scroller = scrollRef.current ?? document.documentElement;
-
     const orb = orbRef.current;
     if (!orb) return;
 
+    // HARD RESET
     ScrollTrigger.getAll().forEach((t) => t.kill());
     gsap.killTweensOf(orb);
 
-    // Initial position
+    // ===== BASE STATE (HERO) =====
     gsap.set(orb, {
       x: 0,
       y: 0,
       scale: 1,
     });
 
-    // Idle rotation (GSAP owns transform now)
+    // HERO → ABOUT (right → left, big → medium)
     gsap.to(orb, {
-      rotate: 360,
-      duration: 24,
-      repeat: -1,
-      ease: "linear",
-    });
-
-    // Scroll-driven motion
-    const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: scroller,
-        scroller,
-        start: "top top",
-        end: "bottom bottom",
+        trigger: "#about",
+        start: "top bottom",
+        end: "top center",
         scrub: true,
-        markers: true, // keep for now
       },
-    });
-
-    tl.to(orb, {
-      x: "-10vw",
-      y: "-6vh",
-      scale: 0.9,
-      duration: 1,
-    });
-
-    tl.to(orb, {
-      x: "-20vw",
-      y: "-12vh",
+      x: "-60vw",
       scale: 0.75,
-      duration: 1,
+    });
+
+    // ABOUT → PROJECTS (left → right, size stable)
+    gsap.to(orb, {
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top bottom",
+        end: "top center",
+        scrub: true,
+      },
+      x: "0vw",
+      scale: 0.75,
+    });
+
+    // PROJECTS → TIMELINE (right → left, final size)
+    gsap.to(orb, {
+      scrollTrigger: {
+        trigger: "#timeline",
+        start: "top bottom",
+        end: "top center",
+        scrub: true,
+      },
+      x: "-48vw",
+      scale: 0.55,
+    });
+
+    // TIMELINE → SKILLS (vertical drop only)
+    gsap.to(orb, {
+      scrollTrigger: {
+        trigger: "#skills",
+        start: "top bottom",
+        end: "top center",
+        scrub: true,
+      },
+      y: "22vh",
+      scale: 0.55,
     });
 
     ScrollTrigger.refresh();
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      gsap.killTweensOf(orb);
+    };
   }, []);
 
   return (
-    <>
-      <div
-        ref={orbRef}
-        className={styles.orbGlow}
-        style={{
-          position: "fixed",
-          right: "20px",
-          width: "300px",
-          height: "300px",
-          zIndex: 9999,
-        }}
-      />
-
-      <div className="fixed bottom-4 left-4 text-xs text-white z-[9999]">
-        Orb Lab – Scroll to test
-      </div>
-    </>
+    <div
+      ref={orbRef}
+      style={{
+        position: "fixed",
+        right: "6vw", // RIGHTMOST anchor
+        top: "28%", // SAME ROW until Skills
+        width: "240px",
+        height: "240px",
+        borderRadius: "50%",
+        background: "red",
+        zIndex: 30,
+        pointerEvents: "none",
+      }}
+    />
   );
 }
