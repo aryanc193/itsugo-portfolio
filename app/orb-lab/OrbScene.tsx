@@ -67,16 +67,20 @@ export default function OrbScene() {
     // - scale is NOT redefined
     //   (prevents flickering / grow-shrink bug)
     // =====================================================
-    gsap.to(orb, {
-      scrollTrigger: {
-        trigger: "#projects",
-        start: "top bottom",
-        end: "top center",
-        scrub: true,
-        immediateRender: false,
-      },
-      x: "0vw", // back to RIGHTMOST
-    });
+    
+    gsap.fromTo(
+      orb,
+      { x: "-60vw" },
+      {
+        x: "0vw",
+        scrollTrigger: {
+          trigger: "#projects",
+          start: "top bottom",
+          end: "top center",
+          scrub: true,
+        },
+      }
+    );
 
     // =====================================================
     // PROJECTS → TIMELINE
