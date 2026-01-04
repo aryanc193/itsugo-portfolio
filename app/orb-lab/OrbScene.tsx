@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger once
 gsap.registerPlugin(ScrollTrigger);
 
 export default function OrbScene() {
@@ -16,22 +15,16 @@ export default function OrbScene() {
 
     // =====================================================
     // HARD RESET
-    // Kill ALL existing ScrollTriggers and tweens
-    // This prevents double-binding during hot reloads
     // =====================================================
     ScrollTrigger.getAll().forEach((t) => t.kill());
     gsap.killTweensOf(orb);
 
     // =====================================================
-    // BASE STATE (HERO)
-    // This is the ONLY implicit state in the system
-    // Everything else scrolls away from this
-    //
-    // right: 6vw (CSS) + x: 0 === RIGHTMOST
+    // BASE STATE — HERO
     // =====================================================
     gsap.set(orb, {
-      x: 0,
-      y: 0,
+      x: 0,     // RIGHTMOST (relative to CSS right: 6vw)
+      y: 0,     // fixed row
       scale: 1, // LARGE
     });
 
@@ -39,42 +32,68 @@ export default function OrbScene() {
     // HERO → ABOUT
     // Right → Left
     // Large → Medium
-    //
-    // NOTE:
-    // - scale changes here intentionally
-    // - immediateRender:false prevents GSAP
-    //   from snapping values before trigger starts
     // =====================================================
-    gsap.to(orb, {
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top bottom",
-        end: "top center",
-        scrub: true,
-        immediateRender: false,
-        // markers: true, // enable when debugging
+    gsap.fromTo(
+      orb,
+      {
+        x: "0vw",
+        scale: 1,
       },
-      x: "-60vw", // move fully left
-      scale: 0.75, // MEDIUM
-    });
+      {
+        x: "-60vw",
+        scale: 0.75,
+        ease: "none", // scrub controls timing, not easing
+        scrollTrigger: {
+          trigger: "#about",
+          start: "top bottom",
+          end: "top center",
+          scrub: 2.0, // 🎬 cinematic inertia
+          // markers: true,
+        },
+      }
+    );
 
     // =====================================================
     // ABOUT → PROJECTS
     // Left → Right
-    // Size STAYS the same
-    //
-    // IMPORTANT:
-    // - scale is NOT redefined
-    //   (prevents flickering / grow-shrink bug)
+    // Scale stays Medium
     // =====================================================
-    
     gsap.fromTo(
       orb,
-      { x: "-60vw" },
+      {
+        x: "-60vw",
+        scale: 0.75,
+      },
       {
         x: "0vw",
+        scale: 0.75,
+        ease: "none",
         scrollTrigger: {
           trigger: "#projects",
+          start: "top bottom",
+          end: "top center",
+          scrub: 2.0,
+        },
+      }
+    );
+
+    // =====================================================
+    // PROJECTS → TIMELINE
+    // Right → Timeline anchor (NOT full left)
+    // Medium → Small (final size)
+    // =====================================================
+    gsap.fromTo(
+      orb,
+      {
+        x: "0vw",
+        scale: 0.75,
+      },
+      {
+        x: "-48vw",
+        scale: 0.55,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#timeline",
           start: "top bottom",
           end: "top center",
           scrub: true,
@@ -83,53 +102,34 @@ export default function OrbScene() {
     );
 
     // =====================================================
-    // PROJECTS → TIMELINE
-    // Right → Left
-    // Medium → Small (final size)
-    //
-    // This is the LAST time scale ever changes
-    // =====================================================
-    gsap.to(orb, {
-      scrollTrigger: {
-        trigger: "#timeline",
-        start: "top bottom",
-        end: "top center",
-        scrub: true,
-        immediateRender: false,
-      },
-      x: "-48vw", // left-aligned for timeline
-      scale: 0.55, // SMALL (locked after this)
-    });
-
-    // =====================================================
     // TIMELINE → SKILLS
-    // Horizontal: Left → Right
-    // Vertical: Drop DOWN
-    // Size: unchanged
-    //
-    // This prepares the orb to later
-    // follow an SVG timeline path
+    // Left → Right
+    // Vertical movement begins ONLY here
+    // Size stays Small
     // =====================================================
-    gsap.to(orb, {
-      scrollTrigger: {
-        trigger: "#skills",
-        start: "top bottom",
-        end: "top center",
-        scrub: true,
-        immediateRender: false,
+    gsap.fromTo(
+      orb,
+      {
+        x: "-48vw",
+        y: "0vh",
+        scale: 0.55,
       },
-      x: "0vw", // return to RIGHT side
-      y: "22vh", // vertical movement STARTS here
-    });
+      {
+        x: "0vw",
+        y: "22vh",
+        scale: 0.55,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top bottom",
+          end: "top center",
+          scrub: true,
+        },
+      }
+    );
 
-    // =====================================================
-    // Force ScrollTrigger to recalc positions
-    // =====================================================
     ScrollTrigger.refresh();
 
-    // =====================================================
-    // CLEANUP
-    // =====================================================
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
       gsap.killTweensOf(orb);
@@ -138,21 +138,18 @@ export default function OrbScene() {
 
   // =====================================================
   // ORB ELEMENT
-  // - fixed positioning
-  // - GSAP owns transform entirely
-  // - visuals intentionally minimal
   // =====================================================
   return (
     <div
       ref={orbRef}
       style={{
         position: "fixed",
-        right: "6vw", // horizontal anchor (RIGHTMOST)
-        top: "28%", // SAME ROW until Skills
+        right: "6vw",
+        top: "28%",
         width: "240px",
         height: "240px",
         borderRadius: "50%",
-        background: "red", // placeholder visual
+        background: "red",
         zIndex: 30,
         pointerEvents: "none",
       }}
