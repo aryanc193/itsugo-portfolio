@@ -1,38 +1,134 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import styles from "./orb.module.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import styles from "./orb.module.css"; // keep for later glow styles
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function GlobalOrb() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const orb = orbRef.current;
+    if (!orb) return;
 
-    const footer = document.querySelector("#contact");
-    if (!footer) return;
+    // =====================================================
+    // HARD RESET (important in Next + fast refresh)
+    // =====================================================
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    gsap.killTweensOf(orb);
 
-    let anchored = false;
+    // =====================================================
+    // BASE STATE — HERO
+    // =====================================================
+    gsap.set(orb, {
+      x: 0,
+      y: 0,
+      scale: 1,
+    });
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !anchored) {
-          anchored = true;
-          container.classList.add(styles.footerMode);
-        }
-      },
-      { threshold: 0.2 }
+    // =====================================================
+    // HERO → ABOUT
+    // =====================================================
+    gsap.fromTo(
+      orb,
+      { x: "0vw", scale: 1 },
+      {
+        x: "-60vw",
+        scale: 0.75,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#about",
+          start: "top center",
+          end: "top top",
+          scrub: 2.0,
+        },
+      }
     );
 
-    observer.observe(footer);
+    // =====================================================
+    // ABOUT → PROJECTS
+    // =====================================================
+    gsap.fromTo(
+      orb,
+      { x: "-60vw", scale: 0.75 },
+      {
+        x: "0vw",
+        scale: 0.75,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#projects",
+          start: "top center",
+          end: "top top",
+          scrub: 2.0,
+        },
+      }
+    );
 
-    return () => observer.disconnect();
+    // =====================================================
+    // PROJECTS → TIMELINE
+    // =====================================================
+    gsap.fromTo(
+      orb,
+      { x: "0vw", scale: 0.75 },
+      {
+        x: "-48vw",
+        scale: 0.55,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#timeline",
+          start: "top center",
+          end: "top top",
+          scrub: 2.0,
+        },
+      }
+    );
+
+    // =====================================================
+    // TIMELINE → SKILLS
+    // =====================================================
+    gsap.fromTo(
+      orb,
+      { x: "-48vw", y: "0vh", scale: 0.55 },
+      {
+        x: "0vw",
+        y: "22vh",
+        scale: 0.55,
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#skills",
+          start: "top center",
+          end: "top top",
+          scrub: 1.0,
+        },
+      }
+    );
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+      gsap.killTweensOf(orb);
+    };
   }, []);
 
   return (
-    <div ref={containerRef} className={styles.orbContainer} aria-hidden>
-      <div className={styles.orbGlow} />
-    </div>
+    <div
+      ref={orbRef}
+      style={{
+        position: "fixed",
+        right: "6vw",
+        top: "28%",
+        width: "240px",
+        height: "240px",
+        borderRadius: "50%",
+        background: "red", // 🔴 DEBUG ORB
+        zIndex: 30,
+        pointerEvents: "none",
+      }}
+      aria-hidden
+    />
   );
 }

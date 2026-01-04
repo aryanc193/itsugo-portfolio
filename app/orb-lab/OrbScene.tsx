@@ -23,31 +23,26 @@ export default function OrbScene() {
     // BASE STATE — HERO
     // =====================================================
     gsap.set(orb, {
-      x: 0,     // RIGHTMOST (relative to CSS right: 6vw)
-      y: 0,     // fixed row
-      scale: 1, // LARGE
+      x: 0,
+      y: 0,
+      scale: 1,
     });
 
     // =====================================================
     // HERO → ABOUT
-    // Right → Left
-    // Large → Medium
     // =====================================================
     gsap.fromTo(
       orb,
-      {
-        x: "0vw",
-        scale: 1,
-      },
+      { x: "0vw", scale: 1 },
       {
         x: "-60vw",
         scale: 0.75,
-        ease: "none", // scrub controls timing, not easing
+        ease: "none",
         scrollTrigger: {
           trigger: "#about",
-          start: "top bottom",
-          end: "top center",
-          scrub: 2.0, // 🎬 cinematic inertia
+          start: "top center",
+          end: "top top",
+          scrub: 2.0,
           // markers: true,
         },
       }
@@ -55,23 +50,18 @@ export default function OrbScene() {
 
     // =====================================================
     // ABOUT → PROJECTS
-    // Left → Right
-    // Scale stays Medium
     // =====================================================
     gsap.fromTo(
       orb,
-      {
-        x: "-60vw",
-        scale: 0.75,
-      },
+      { x: "-60vw", scale: 0.75 },
       {
         x: "0vw",
         scale: 0.75,
         ease: "none",
         scrollTrigger: {
           trigger: "#projects",
-          start: "top bottom",
-          end: "top center",
+          start: "top center",
+          end: "top top",
           scrub: 2.0,
         },
       }
@@ -79,41 +69,29 @@ export default function OrbScene() {
 
     // =====================================================
     // PROJECTS → TIMELINE
-    // Right → Timeline anchor (NOT full left)
-    // Medium → Small (final size)
     // =====================================================
     gsap.fromTo(
       orb,
-      {
-        x: "0vw",
-        scale: 0.75,
-      },
+      { x: "0vw", scale: 0.75 },
       {
         x: "-48vw",
         scale: 0.55,
         ease: "none",
         scrollTrigger: {
           trigger: "#timeline",
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
+          start: "top center",
+          end: "top top",
+          scrub: 2.0,
         },
       }
     );
 
     // =====================================================
     // TIMELINE → SKILLS
-    // Left → Right
-    // Vertical movement begins ONLY here
-    // Size stays Small
     // =====================================================
     gsap.fromTo(
       orb,
-      {
-        x: "-48vw",
-        y: "0vh",
-        scale: 0.55,
-      },
+      { x: "-48vw", y: "0vh", scale: 0.55 },
       {
         x: "0vw",
         y: "22vh",
@@ -121,9 +99,9 @@ export default function OrbScene() {
         ease: "none",
         scrollTrigger: {
           trigger: "#skills",
-          start: "top bottom",
-          end: "top center",
-          scrub: true,
+          start: "top center",
+          end: "top top",
+          scrub: 1.0, // unchanged as requested
         },
       }
     );
@@ -136,9 +114,6 @@ export default function OrbScene() {
     };
   }, []);
 
-  // =====================================================
-  // ORB ELEMENT
-  // =====================================================
   return (
     <div
       ref={orbRef}

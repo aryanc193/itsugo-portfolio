@@ -10,6 +10,7 @@ export default function Hero() {
 
   return (
     <section
+      id="hero"
       className="relative font-main w-full min-h-screen text-main overflow-hidden -mb-20 z-10"
       data-orb-zone="hero"
     >
