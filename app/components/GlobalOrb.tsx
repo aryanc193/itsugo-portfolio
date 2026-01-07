@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import styles from "./orb.module.css"; // keep for later glow styles
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,101 +11,79 @@ export default function GlobalOrb() {
 
   useEffect(() => {
     const orb = orbRef.current;
-    if (!orb) return;
+    const skillsSection = document.querySelector("#skills");
 
-    // =====================================================
-    // HARD RESET (important in Next + fast refresh)
-    // =====================================================
+    if (!orb || !skillsSection) return;
+
+    // Clean slate
     ScrollTrigger.getAll().forEach((t) => t.kill());
     gsap.killTweensOf(orb);
 
-    // =====================================================
-    // BASE STATE — HERO
-    // =====================================================
+    // Base state (Hero)
     gsap.set(orb, {
       x: 0,
       y: 0,
       scale: 1,
     });
 
-    // =====================================================
-    // HERO → ABOUT
-    // =====================================================
-    gsap.fromTo(
-      orb,
-      { x: "0vw", scale: 1 },
-      {
-        x: "-60vw",
-        scale: 0.75,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#about",
-          start: "top center",
-          end: "top top",
-          scrub: 2.0,
-        },
-      }
-    );
+    // SINGLE ScrollTrigger
+    ScrollTrigger.create({
+      trigger: document.body,
 
-    // =====================================================
-    // ABOUT → PROJECTS
-    // =====================================================
-    gsap.fromTo(
-      orb,
-      { x: "-60vw", scale: 0.75 },
-      {
-        x: "0vw",
-        scale: 0.75,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#projects",
-          start: "top center",
-          end: "top top",
-          scrub: 2.0,
-        },
-      }
-    );
+      // 🔑 IMPORTANT PART
+      // Scroll range = top of page → top of Skills
+      start: "top top",
+      endTrigger: skillsSection,
+      end: "top top",
 
-    // =====================================================
-    // PROJECTS → TIMELINE
-    // =====================================================
-    gsap.fromTo(
-      orb,
-      { x: "0vw", scale: 0.75 },
-      {
-        x: "-48vw",
-        scale: 0.55,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#timeline",
-          start: "top center",
-          end: "top top",
-          scrub: 2.0,
-        },
-      }
-    );
+      scrub: true,
 
-    // =====================================================
-    // TIMELINE → SKILLS
-    // =====================================================
-    gsap.fromTo(
-      orb,
-      { x: "-48vw", y: "0vh", scale: 0.55 },
-      {
-        x: "0vw",
-        y: "22vh",
-        scale: 0.55,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#skills",
-          start: "top center",
-          end: "top top",
-          scrub: 1.0,
-        },
-      }
-    );
+      onUpdate: (self) => {
+        // progress is now CLAMPED between [0, 1]
+        const p = self.progress;
 
-    ScrollTrigger.refresh();
+        // HERO → ABOUT (0.0 → 0.25)
+        if (p <= 0.25) {
+          const t = p / 0.25;
+          gsap.set(orb, {
+            x: gsap.utils.interpolate(0, -60, t) + "vw",
+            y: "0vh",
+            scale: gsap.utils.interpolate(1, 0.75, t),
+          });
+          return;
+        }
+
+        // ABOUT → PROJECTS (0.25 → 0.5)
+        if (p <= 0.5) {
+          const t = (p - 0.25) / 0.25;
+          gsap.set(orb, {
+            x: gsap.utils.interpolate(-60, 0, t) + "vw",
+            y: "0vh",
+            scale: 0.75,
+          });
+          return;
+        }
+
+        // PROJECTS → TIMELINE (0.5 → 0.75)
+        if (p <= 0.75) {
+          const t = (p - 0.5) / 0.25;
+          gsap.set(orb, {
+            x: gsap.utils.interpolate(0, -48, t) + "vw",
+            y: "0vh",
+            scale: gsap.utils.interpolate(0.75, 0.55, t),
+          });
+          return;
+        }
+
+        // TIMELINE → SKILLS (0.75 → 1.0)
+        const t = (p - 0.75) / 0.25;
+        gsap.set(orb, {
+          x: gsap.utils.interpolate(-48, 0, t) + "vw",
+          y: gsap.utils.interpolate(0, 22, t) + "vh",
+          scale: 0.55,
+        });
+      },
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -124,7 +101,7 @@ export default function GlobalOrb() {
         width: "240px",
         height: "240px",
         borderRadius: "50%",
-        background: "red", // 🔴 DEBUG ORB
+        background: "red", // debug orb
         zIndex: 30,
         pointerEvents: "none",
       }}
