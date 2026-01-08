@@ -1,240 +1,169 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function GlobalOrb() {
   const orbRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const orb = orbRef.current;
-    const skillsSection = document.querySelector("#skills");
-    const contactSection = document.querySelector("#contact");
-    const timelineSection = document.querySelector("#timeline");
+    if (!orb) return;
+
+    const timelineSection = document.querySelector("#timeline") as HTMLElement;
     const timelinePath = document.querySelector(
       "#timeline-path"
-    ) as SVGPathElement | null;
+    ) as SVGPathElement;
 
-    if (!orb || !skillsSection || !contactSection || !timelineSection) return;
+    let rafId = 0;
 
-    const easeOut = gsap.parseEase("power2.out");
+    // ═══════════════════════════════════════════════════════════
+    // SCROLL-TO-TRANSFORM: Single Source of Truth
+    // ═══════════════════════════════════════════════════════════
 
-    // CLEAN SLATE
-    ScrollTrigger.getAll().forEach((t) => t.kill());
-    gsap.killTweensOf(orb);
-    gsap.ticker.lagSmoothing(0);
+    const updateOrb = () => {
+      const scrollY = window.scrollY;
+      const vh = window.innerHeight;
 
-    // BASE STATE
-    gsap.set(orb, {
-      position: "fixed",
-      top: "28%",
-      right: "6vw",
-      left: "auto",
-      x: 0,
-      y: 0,
-      scale: 1,
-      willChange: "transform",
-    });
+      // ─────────────────────────────────────────────────────────
+      // TIMELINE MODE: Check if timeline is in active viewport zone
+      // ─────────────────────────────────────────────────────────
+      if (timelineSection && timelinePath) {
+        const rect = timelineSection.getBoundingClientRect();
+        const centerY = vh * 0.5;
 
-    /* ----------------------------------------------------
-       1️⃣ PRIMARY NARRATIVE CONTROLLER (unchanged logic)
-    ---------------------------------------------------- */
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: "top top",
-      endTrigger: skillsSection,
-      end: "top top",
-      scrub: 2,
+        // Active when timeline section spans the vertical center
+        const isActive = rect.top < centerY && rect.bottom > centerY;
 
-      onUpdate: (self) => {
-        const p = self.progress;
+        if (isActive) {
+          // Calculate progress through timeline section
+          const sectionProgress = Math.max(
+            0,
+            Math.min(1, (centerY - rect.top) / rect.height)
+          );
 
-        if (p <= 0.25) {
-          const t = easeOut(p / 0.25);
-          gsap.set(orb, {
-            x: gsap.utils.interpolate(0, -60, t) + "vw",
-            y: "0vh",
-            scale: gsap.utils.interpolate(1, 0.75, t),
-          });
+          // Sample SVG path for X coordinate only
+          const pathLength = timelinePath.getTotalLength();
+          const point = timelinePath.getPointAtLength(
+            pathLength * sectionProgress
+          );
+
+          // Convert SVG coordinates to viewport pixels
+          const svg = timelinePath.ownerSVGElement!;
+          const svgRect = svg.getBoundingClientRect();
+          const viewBox = svg.viewBox.baseVal;
+          const scaleX = svgRect.width / viewBox.width;
+
+          const xViewport = svgRect.left + (point.x - viewBox.x) * scaleX;
+
+          // Apply offset and safety margin
+          const OFFSET = 220;
+          const MIN_MARGIN = 140;
+          const finalX = Math.max(xViewport + OFFSET, MIN_MARGIN);
+
+          // Lock Y to viewport center (cinematic stability)
+          const finalY = centerY;
+
+          orb.style.cssText = `
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translate(${finalX}px, ${finalY}px) scale(0.55);
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: red;
+            z-index: 30;
+            pointer-events: none;
+            will-change: transform;
+          `;
           return;
         }
+      }
 
-        if (p <= 0.5) {
-          const t = easeOut((p - 0.25) / 0.25);
-          gsap.set(orb, {
-            x: gsap.utils.interpolate(-60, 0, t) + "vw",
-            y: "0vh",
-            scale: 0.75,
-          });
-          return;
-        }
+      // ─────────────────────────────────────────────────────────
+      // NARRATIVE MODE: Default scroll-driven behavior
+      // ─────────────────────────────────────────────────────────
 
-        if (p <= 0.75) {
-          const t = easeOut((p - 0.5) / 0.25);
-          gsap.set(orb, {
-            x: gsap.utils.interpolate(0, -48, t) + "vw",
-            y: "0vh",
-            scale: gsap.utils.interpolate(0.75, 0.55, t),
-          });
-          return;
-        }
+      // Scroll milestones (tune these to match your page layout)
+      const HERO_END = vh * 1.5;
+      const ABOUT_END = vh * 2.5;
+      const PROJECTS_END = vh * 3.5;
+      const SKILLS_START = vh * 4.5;
 
-        const t = easeOut((p - 0.75) / 0.25);
-        gsap.set(orb, {
-          x: gsap.utils.interpolate(-48, 0, t) + "vw",
-          y: gsap.utils.interpolate(0, 22, t) + "vh",
-          scale: 0.55,
-        });
-      },
-    });
+      let xVw = 0;
+      let yVh = 0;
+      let scale = 1;
 
-    /* ----------------------------------------------------
-       2️⃣ SVG HORIZONTAL GUIDE — TIMELINE ONLY
-       
-       DESIGN PRINCIPLE: The SVG path provides X-axis guidance only.
-       The orb remains vertically centered (50vh) for cinematic stability.
-       This prevents vertical clipping and maintains viewport presence.
-    ---------------------------------------------------- */
-    const ORB_RADIUS = 120; // half of 240px
-    const HORIZONTAL_OFFSET = 220; // tune this to adjust distance from path
-    const VERTICAL_CENTER = window.innerHeight * 0.5; // locked Y position
+      // Phase 1: Hero → About (sweep left)
+      if (scrollY < HERO_END) {
+        const t = scrollY / HERO_END;
+        xVw = -60 * t;
+        yVh = 0;
+        scale = 1 - 0.25 * t;
+      }
+      // Phase 2: About → Projects (return right)
+      else if (scrollY < ABOUT_END) {
+        const t = (scrollY - HERO_END) / (ABOUT_END - HERO_END);
+        xVw = -60 + 60 * t;
+        yVh = 0;
+        scale = 0.75;
+      }
+      // Phase 3: Projects → Timeline (sweep left again)
+      else if (scrollY < PROJECTS_END) {
+        const t = (scrollY - ABOUT_END) / (PROJECTS_END - ABOUT_END);
+        xVw = -48 * t;
+        yVh = 0;
+        scale = 0.75 - 0.2 * t;
+      }
+      // Phase 4: After Timeline → Skills (descend)
+      else if (scrollY < SKILLS_START) {
+        const t = (scrollY - PROJECTS_END) / (SKILLS_START - PROJECTS_END);
+        xVw = -48 + 48 * t;
+        yVh = 22 * t;
+        scale = 0.55;
+      }
+      // Phase 5: Skills and beyond (stable)
+      else {
+        xVw = 0;
+        yVh = 22;
+        scale = 0.55;
+      }
 
-    if (timelinePath) {
-      const svg = timelinePath.ownerSVGElement!;
-      const totalLength = timelinePath.getTotalLength();
+      orb.style.cssText = `
+        position: fixed;
+        top: 28%;
+        right: 6vw;
+        left: auto;
+        transform: translate(${xVw}vw, ${yVh}vh) scale(${scale});
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: red;
+        z-index: 30;
+        pointer-events: none;
+        will-change: transform;
+      `;
+    };
 
-      const getHorizontalGuidance = (progress: number) => {
-        // Sample the SVG path for X coordinate only
-        const svgPoint = timelinePath.getPointAtLength(totalLength * progress);
+    // ═══════════════════════════════════════════════════════════
+    // SCROLL HANDLER: RAF-throttled for 60fps
+    // ═══════════════════════════════════════════════════════════
 
-        // Get SVG's viewport position and scaling
-        const svgRect = svg.getBoundingClientRect();
-        const viewBox = svg.viewBox.baseVal;
+    const onScroll = () => {
+      if (rafId) return; // Already scheduled
 
-        // Convert SVG X coordinate to viewport pixels
-        const scaleX = svgRect.width / viewBox.width;
-        const viewportX = svgRect.left + (svgPoint.x - viewBox.x) * scaleX;
-
-        // Apply horizontal offset with safety margin
-        const finalX = Math.max(
-          viewportX + HORIZONTAL_OFFSET,
-          ORB_RADIUS + 30 // minimum distance from left edge
-        );
-
-        // Y position is LOCKED to viewport center for cinematic stability
-        return { x: finalX, y: VERTICAL_CENTER };
-      };
-
-      // Timeline entrance: smooth transition from narrative to SVG guidance
-      ScrollTrigger.create({
-        trigger: timelineSection,
-        start: "top bottom", // start transition early
-        end: "top center",
-        scrub: 1.5,
-
-        onEnter: () => {
-          // Switch to absolute positioning for SVG guidance
-          gsap.set(orb, {
-            left: 0,
-            right: "auto",
-            top: 0,
-          });
-        },
-
-        onUpdate: (self) => {
-          // Blend into SVG-guided X position
-          const { x, y } = getHorizontalGuidance(0);
-          const currentX = gsap.getProperty(orb, "x");
-          const blendedX = gsap.utils.interpolate(currentX, x, self.progress);
-
-          gsap.set(orb, {
-            x: blendedX,
-            y: y,
-            scale: 0.55,
-          });
-        },
+      rafId = requestAnimationFrame(() => {
+        updateOrb();
+        rafId = 0;
       });
+    };
 
-      // Main timeline phase: follow SVG horizontally
-      ScrollTrigger.create({
-        trigger: timelineSection,
-        start: "top center",
-        end: "bottom center",
-        scrub: 1.5,
-
-        onUpdate: (self) => {
-          const { x, y } = getHorizontalGuidance(self.progress);
-          gsap.set(orb, {
-            left: 0,
-            right: "auto",
-            top: 0,
-            x: x,
-            y: y,
-            scale: 0.55,
-          });
-        },
-      });
-
-      // Timeline exit: smooth transition back to narrative system
-      ScrollTrigger.create({
-        trigger: timelineSection,
-        start: "bottom center",
-        end: "bottom top",
-        scrub: 1.5,
-
-        onLeave: () => {
-          // Restore narrative positioning system
-          gsap.set(orb, {
-            left: "auto",
-            right: "6vw",
-            top: "28%",
-          });
-        },
-
-        onLeaveBack: () => {
-          // When scrolling back up past timeline, restore narrative system
-          gsap.set(orb, {
-            left: "auto",
-            right: "6vw",
-            top: "28%",
-          });
-        },
-
-        onEnterBack: () => {
-          // Re-entering timeline from below, switch to SVG guidance
-          gsap.set(orb, {
-            left: 0,
-            right: "auto",
-            top: 0,
-          });
-        },
-      });
-    }
-
-    /* ----------------------------------------------------
-       3️⃣ CONTACT LANDING (unchanged)
-    ---------------------------------------------------- */
-    gsap.to(orb, {
-      scrollTrigger: {
-        trigger: contactSection,
-        start: "top bottom",
-        end: "top center",
-        scrub: 2,
-      },
-      left: "50%",
-      right: "auto",
-      x: "-50%",
-      y: "12vh",
-      scale: 0.95,
-      ease: "none",
-    });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    updateOrb(); // Initial position
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-      gsap.killTweensOf(orb);
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
