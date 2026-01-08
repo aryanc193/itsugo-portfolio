@@ -12,39 +12,40 @@ export default function GlobalOrb() {
   useEffect(() => {
     const orb = orbRef.current;
     const skillsSection = document.querySelector("#skills");
+    const contactSection = document.querySelector("#contact");
 
-    if (!orb || !skillsSection) return;
+    if (!orb || !skillsSection || !contactSection) return;
 
-    // Clean slate
+    const easeOut = gsap.parseEase("power2.out");
+
+    // CLEAN SLATE
     ScrollTrigger.getAll().forEach((t) => t.kill());
     gsap.killTweensOf(orb);
 
-    // Base state (Hero)
+    // BASE STATE (HERO)
     gsap.set(orb, {
       x: 0,
       y: 0,
       scale: 1,
+      right: "6vw",
+      left: "auto",
     });
 
-    // SINGLE ScrollTrigger
+    // MAIN NARRATIVE SCROLL (Hero → Skills)
     ScrollTrigger.create({
       trigger: document.body,
-
-      // 🔑 IMPORTANT PART
-      // Scroll range = top of page → top of Skills
       start: "top top",
       endTrigger: skillsSection,
       end: "top top",
-
-      scrub: true,
+      scrub: 2.0, // 🎬 cinematic inertia
 
       onUpdate: (self) => {
-        // progress is now CLAMPED between [0, 1]
         const p = self.progress;
 
-        // HERO → ABOUT (0.0 → 0.25)
+        // HERO → ABOUT
         if (p <= 0.25) {
-          const t = p / 0.25;
+          const rawT = p / 0.25;
+          const t = easeOut(rawT);
           gsap.set(orb, {
             x: gsap.utils.interpolate(0, -60, t) + "vw",
             y: "0vh",
@@ -53,9 +54,10 @@ export default function GlobalOrb() {
           return;
         }
 
-        // ABOUT → PROJECTS (0.25 → 0.5)
+        // ABOUT → PROJECTS
         if (p <= 0.5) {
-          const t = (p - 0.25) / 0.25;
+          const rawT = (p - 0.25) / 0.25;
+          const t = easeOut(rawT);
           gsap.set(orb, {
             x: gsap.utils.interpolate(-60, 0, t) + "vw",
             y: "0vh",
@@ -64,9 +66,10 @@ export default function GlobalOrb() {
           return;
         }
 
-        // PROJECTS → TIMELINE (0.5 → 0.75)
+        // PROJECTS → TIMELINE
         if (p <= 0.75) {
-          const t = (p - 0.5) / 0.25;
+          const rawT = (p - 0.5) / 0.25;
+          const t = easeOut(rawT);
           gsap.set(orb, {
             x: gsap.utils.interpolate(0, -48, t) + "vw",
             y: "0vh",
@@ -75,14 +78,32 @@ export default function GlobalOrb() {
           return;
         }
 
-        // TIMELINE → SKILLS (0.75 → 1.0)
-        const t = (p - 0.75) / 0.25;
+        // TIMELINE → SKILLS
+        const rawT = (p - 0.75) / 0.25;
+        const t = easeOut(rawT);
         gsap.set(orb, {
           x: gsap.utils.interpolate(-48, 0, t) + "vw",
           y: gsap.utils.interpolate(0, 22, t) + "vh",
           scale: 0.55,
         });
       },
+    });
+
+    // CONTACT → CENTER (cinematic landing)
+    gsap.to(orb, {
+      scrollTrigger: {
+        trigger: contactSection,
+        start: "top bottom",
+        end: "top center",
+        scrub: 2.2, // slower, heavier
+      },
+
+      right: "auto",
+      left: "50%",
+      x: "-50%",
+      y: "12vh",
+      scale: 0.95,
+      ease: "none",
     });
 
     return () => {
@@ -101,7 +122,7 @@ export default function GlobalOrb() {
         width: "240px",
         height: "240px",
         borderRadius: "50%",
-        background: "red", // debug orb
+        background: "red",
         zIndex: 30,
         pointerEvents: "none",
       }}
