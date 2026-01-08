@@ -30,6 +30,7 @@ const Trail = forwardRef<SVGPathElement>((_, ref) => {
       </defs>
 
       <path
+        id="timeline-path"
         ref={ref}
         d={d}
         fill="none"
