@@ -14,13 +14,13 @@ export default function Skills() {
       className="py-32 font-main relative text-foreground"
       data-orb-zone="skills"
     >
-      <Orb
+      {/* <Orb
         size="clamp(50px, 3vw, 100px)"
         top="85%"
         right="8%"
         float={true}
         mobileOpacity={0}
-      />
+      /> */}
 
       <div className="max-w-5xl mx-auto px-6 -mb-30">
         <h2 className="text-center text-accent text-xl tracking-widest mb-10">
