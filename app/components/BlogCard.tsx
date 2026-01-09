@@ -21,13 +21,13 @@ export default function BlogCard({
       target={href.startsWith("http") ? "_blank" : undefined}
       className="group
         flex gap-4 p-1 rounded-xl w-full
-        bg-white/5 border border-accent/20
+        bg-background/60 border border-accent/20
         hover:border-accent hover:shadow-[0_0_15px_var(--color-accent)]
         transition-all
       "
     >
       {/* THUMBNAIL */}
-      <div className="w-30 h-30 rounded-sm overflow-hidden bg-black/20 opacity-40 group-hover:opacity-90 shrink-0">
+      <div className="w-30 h-30 rounded-sm overflow-hidden bg-black opacity-40 group-hover:opacity-90 shrink-0">
         <img
           src={cover || placeholder}
           alt={title}

@@ -2,30 +2,106 @@
   width: 240px;
   height: 240px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #0ffbff, rgb(43, 103, 255));
+  position: relative;
+  overflow: hidden;
 
-  /* Glow */
-  box-shadow: 0 0 200px rgba(0, 255, 220, 0.75), 0 0 80px rgba(0, 160, 255, 0.52);
+  /* Refined multi-layer lighting */
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      rgba(3, 215, 239, 0.81),
+      rgb(6, 193, 235, 0.7) 25%,
+      rgb(7, 119, 225, 0.7) 45%,
+      rgb(0, 85, 255) 65%,
+      rgb(12, 89, 245) 100%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      rgba(120, 235, 240, 0.6),
+      rgba(70, 140, 230, 0.45) 40%,
+      transparent 70%
+    );
 
-  /* CSS-only motion */
-  animation: orb-rotate 12s linear infinite, orb-float 4s ease-in-out infinite;
+  background-blend-mode: screen;
+
+  filter: blur(1.2px);
+
+  /* Brighter but classy glow */
+  box-shadow:
+    0 0 260px rgba(90, 190, 255, 0.55),
+    0 0 120px rgba(120, 255, 235, 0.45);
+
+  animation:
+    orb-rotate 18s linear infinite,
+    orb-float 7s ease-in-out infinite;
+
+  z-index: -100;
+}
+
+/* inner fluid energy */
+.orbCore::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse 65% 70% at 30% 40%,
+      rgb(0, 229, 255),
+      rgba(0, 157, 255, 0.663) 60%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 50% 80% at 70% 65%,
+      rgba(0, 187, 255, 0.65),
+      rgba(12, 100, 215, 0.5) 60%,
+      transparent 100%
+    );
+
+  mix-blend-mode: screen;
+  opacity: 0.85;
+
+  animation:
+    orbWave 14s ease-in-out infinite alternate,
+    orbGlowPulse 6s ease-in-out infinite,
+    orbNoiseShift 9s ease-in-out infinite;
+}
+
+/* motion refinements */
+@keyframes orbWave {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(8deg) scale(1.04); }
+  100% { transform: rotate(-6deg) scale(1); }
+}
+
+@keyframes orbGlowPulse {
+  0% {
+    opacity: 0.75;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.12);
+  }
+  100% {
+    opacity: 0.75;
+    filter: brightness(0.95);
+  }
+}
+
+@keyframes orbNoiseShift {
+  0% { background-position: 40% 40%; }
+  50% { background-position: 60% 65%; }
+  100% { background-position: 40% 40%; }
 }
 
 @keyframes orb-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes orb-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -10px;
-  }
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -14px; }
 }

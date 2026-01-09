@@ -18,13 +18,13 @@ export default function ProjectsPreview() {
       className="relative font-main z-21 w-full py-28 px-6 text-foreground"
       data-orb-zone="projects"
     >
-      <Orb
+      {/* <Orb
         top="53%"
         right="3%"
         size="clamp(220px, 10vw, 440px)"
         float={true}
         mobileOpacity={0}
-      />
+      /> */}
 
       <div className="max-w-5xl mx-auto ">
         <h1 className="text-4xl font-bold mb-12">
