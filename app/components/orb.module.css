@@ -4,7 +4,6 @@
   overflow: hidden;
   overflow-x: hidden;
   pointer-events: none;
-  z-index: -10;
   background: radial-gradient(
     circle at center,
     rgba(0, 255, 220, 0.95) 0%,
@@ -71,10 +70,10 @@
 /* subtle in-place spinning */
 @keyframes orbSpin {
   0% {
-    transform: translateY(-50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translateY(-50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 

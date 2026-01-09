@@ -48,7 +48,7 @@ export default function Writing({
   return (
     <section
       id="blog"
-      className="w-full font-main py-28 px-6 bg-background text-foreground"
+      className="w-full font-main py-28 px-6 text-foreground"
     >
       <div className="max-w-6xl mx-auto">
         {/* HEADING */}

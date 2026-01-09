@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "./context/LanguageContext";
 import Script from "next/script";
+import GlobalOrb from "./components/GlobalOrb";
 import NavbarWrapper from "./components/NavbarWrapper";
 import {
   Inter,
@@ -80,6 +81,8 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <NavbarWrapper />
+          {/* GLOBAL ORB — persistent across routes */}
+          <GlobalOrb />
           {children}
         </LanguageProvider>
       </body>
