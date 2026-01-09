@@ -2,10 +2,16 @@
 import { forwardRef } from "react";
 
 const Trail = forwardRef<SVGPathElement>((_, ref) => {
-  const d = `
+  const visiblePath = `
     M -150 50
     C 400 20,   350 180,    300 200
     C -450 350, -500 600,   300 650
+  `;
+
+  const orbPath = `
+    M -150 350
+    C 400 350, 350 350, 300 350
+    C -450 350, -500 350, 300 350
   `;
 
   return (
@@ -29,15 +35,25 @@ const Trail = forwardRef<SVGPathElement>((_, ref) => {
         </filter>
       </defs>
 
+      {/* Visible decorative trail */}
       <path
         id="timeline-path"
         ref={ref}
-        d={d}
+        d={visiblePath}
         fill="none"
         stroke="var(--accent)"
         strokeWidth="2"
         strokeLinecap="round"
         filter="url(#glow)"
+      />
+
+      {/* Invisible motion rail for orb */}
+      <path
+        id="timeline-path-orb"
+        d={orbPath}
+        fill="none"
+        stroke="none"
+        pointerEvents="none"
       />
     </>
   );

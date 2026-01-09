@@ -14,7 +14,7 @@ export default function Hero() {
       className="relative font-main w-full min-h-screen text-main overflow-hidden -mb-20 z-10"
       data-orb-zone="hero"
     >
-      <Orb
+      {/* <Orb
         top="50%"
         right="3%"
         size="clamp(300px, 20vw, 540px)"
@@ -25,7 +25,7 @@ export default function Hero() {
         mobileOpacity={1}
         mobileFloat={true}
         className="-z-10"
-      />
+      /> */}
 
       <div className="max-w-4xl mx-auto px-6 pt-32 md:pt-48 lg:pt-56 ">
         {/* ---------- HEADLINE ---------- */}

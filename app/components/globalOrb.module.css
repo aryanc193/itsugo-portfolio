@@ -1,0 +1,31 @@
+.orbCore {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #0ffbff, rgb(43, 103, 255));
+
+  /* Glow */
+  box-shadow: 0 0 200px rgba(0, 255, 220, 0.75), 0 0 80px rgba(0, 160, 255, 0.52);
+
+  /* CSS-only motion */
+  animation: orb-rotate 12s linear infinite, orb-float 4s ease-in-out infinite;
+}
+
+@keyframes orb-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orb-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
