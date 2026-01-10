@@ -34,14 +34,17 @@ export default function GlobalOrb() {
        ========================================================= */
     gsap.set(orb, {
       position: "fixed",
-      left: 0,
-      top: 0,
-      x: "75vw",
-      y: "15vh",
+      left: "50%",
+      top: "50%",
+      xPercent: -50,
+      yPercent: -50,
       scale: 1.35,
       pointerEvents: "none",
       willChange: "transform",
     });
+
+    // initial hero placement (right side)
+gsap.set(orb, { x: "35vw" });
 
     /* =========================================================
        MASTER TIMELINE (MOVEMENT ONLY)
@@ -62,19 +65,19 @@ export default function GlobalOrb() {
        ========================================================= */
     tl.to(orb, {
       autoAlpha: 1,
-      x: "15vw",
+      x: "-30vw",
       scale: 0.75,
       ease: "none",
     });
 
     tl.to(orb, {
-      x: "85vw",
+      x: "80vw",
       scale: 0.75,
       ease: "none",
     });
 
     tl.to(orb, {
-      x: "300vw",
+      x: "500vw",
       autoAlpha: 0,
       ease: "none",
     });
@@ -83,7 +86,7 @@ export default function GlobalOrb() {
        SKILLS — YOUR TUNED MOTION (UNCHANGED)
        ========================================================= */
     tl.to(orb, {
-      x: "110vw",
+      x: "70vw",
       scale: 0.5,
       autoAlpha: 1,
       ease: "none",
@@ -93,9 +96,9 @@ export default function GlobalOrb() {
        BLOG — PERFECT CENTER
        ========================================================= */
     tl.to(orb, {
-      x: "42vw",
-      y: "40vh",
-      scale: 1,
+      x: 0,
+      y: 0,
+      scale: 1.25,
       ease: "none",
     });
 
