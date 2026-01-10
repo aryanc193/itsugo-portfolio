@@ -145,3 +145,119 @@
     transform: translateX(80px);
   }
 }
+
+/* Timeline Orb — mini, refined, lifted */
+.timeline-follower {
+  position: fixed;
+
+  /* Responsive but controlled size */
+  width: clamp(20px, 2.2vw, 34px);
+  height: clamp(20px, 2.2vw, 34px);
+  border-radius: 50%;
+  overflow: hidden;
+
+  /* Derived from global orbCore */
+  background: radial-gradient(
+      circle at 30% 28%,
+      rgba(3, 215, 239, 0.85),
+      rgba(6, 193, 235, 0.7) 25%,
+      rgba(7, 119, 225, 0.7) 45%,
+      rgb(0, 85, 255) 65%,
+      rgb(12, 89, 245) 100%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      rgba(120, 235, 240, 0.45),
+      rgba(70, 140, 230, 0.35) 40%,
+      transparent 70%
+    );
+
+  background-blend-mode: screen;
+
+  /* Clear depth separation from trail */
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45),
+    /* depth shadow (critical) */ 0 0 18px rgba(90, 190, 255, 0.75),
+    0 0 48px rgba(120, 255, 235, 0.45);
+
+  /*
+   * Center on path, then LIFT
+   * px lift is intentional & necessary
+   */
+  transform: translate(-50%, -50%) translateY(32px);
+
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+}
+
+/* Inner fluid energy (lighter than global) */
+.timeline-follower::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background: radial-gradient(
+      ellipse 65% 70% at 30% 40%,
+      rgba(0, 229, 255, 0.9),
+      rgba(0, 157, 255, 0.55) 60%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 50% 80% at 70% 65%,
+      rgba(0, 187, 255, 0.55),
+      rgba(12, 100, 215, 0.45) 60%,
+      transparent 100%
+    );
+
+  mix-blend-mode: screen;
+  opacity: 0.85;
+
+  animation: follower-wave 16s ease-in-out infinite alternate,
+    follower-glow 6s ease-in-out infinite;
+}
+
+/* Soft outer aura */
+.timeline-follower::after {
+  content: "";
+  position: absolute;
+  inset: -70%;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(120, 255, 235, 0.28),
+    transparent 70%
+  );
+
+  filter: blur(16px);
+  opacity: 0.85;
+}
+
+/* Subtle life — calmer than global orb */
+@keyframes follower-wave {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(6deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(-5deg) scale(1);
+  }
+}
+
+@keyframes follower-glow {
+  0% {
+    opacity: 0.75;
+    filter: brightness(0.95);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.1);
+  }
+  100% {
+    opacity: 0.75;
+    filter: brightness(0.95);
+  }
+}

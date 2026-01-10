@@ -40,7 +40,7 @@ export default function SVGNode({
     (entry.labelSide as (typeof fallback)[number]) ?? fallback[index % 4];
 
   // base numeric values (used for position math)
-  const DOT_R = 6;
+  const DOT_R = 3;
   const CLICK_R = 16;
   const GAP = 16;
   const rx = 12;

@@ -125,7 +125,7 @@ gsap.set(orb, { x: "35vw" });
   }, []);
 
   return (
-    <div ref={orbRef} aria-hidden>
+    <div ref={orbRef} id="global-orb" aria-hidden>
       <div className={styles.orbCore} />
     </div>
   );

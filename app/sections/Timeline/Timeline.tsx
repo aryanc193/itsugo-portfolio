@@ -7,7 +7,7 @@ import Node from "./Node";
 import Trail from "./Trail";
 import { links } from "@/data/links";
 import { useLanguage } from "@/app/context/LanguageContext";
-import Orb from "@/app/components/Orb";
+import TimelineOrbController from "@/app/components/TimelineOrbController";
 import SVGNode from "./SVGNode";
 import "./timeline.css";
 
@@ -205,6 +205,8 @@ export default function TimelineSection() {
                 );
               })}
           </svg>
+
+          <div id="timeline-follower" className="timeline-follower" />
         </div>
 
         {/* SIMPLE MODAL */}
@@ -271,6 +273,9 @@ export default function TimelineSection() {
           </div>
         )}
       </div>
+
+      <div id="timeline-follower" className="timeline-follower" />
+      <TimelineOrbController />
     </section>
   );
 }
