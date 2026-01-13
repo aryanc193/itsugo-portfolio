@@ -223,3 +223,138 @@ It reflects:
 It’s the kind of system I’d want to use daily — and the kind I enjoy building.
 
 The system is fully deployable today, with Chrome Web Store publication intentionally deferred until product direction is validated.
+
+---
+
+## Recent Iterations & Advanced Features
+
+As the project matured, I extended Commentto beyond basic summarization and generation, focusing on real-world usage patterns and edge cases surfaced through daily testing.
+
+### 1. Loosened Prompt Constraints (Expressiveness Without Quality Loss)
+
+Early versions of the system produced consistent but overly “AI-sounding” comments. While technically correct, they lacked personality and variation.
+
+**What changed:**
+
+* Reduced over-constraint in generation prompts
+* Increased temperature selectively (generation only, not summarization)
+* Shifted prompts from rule-heavy instructions to *behavioral guidance*
+
+**Result:**
+
+* Comments became more human, expressive, and varied
+* Performative voices (e.g. character-based or stylized tones) were able to fully lean into personality
+* Interpretive voices retained clarity without sounding generic
+
+This demonstrated that **prompt looseness must be intentional**, not random — stability and expressiveness can coexist when constraints are applied selectively.
+
+---
+
+### 2. Regenerate Variations (Low-Noise UX)
+
+Instead of introducing a complex versioning system, I added a lightweight regeneration capability.
+
+**Design choices:**
+
+* Same input, same voice, different expressive take
+* Subtle “Try another” affordance (not a primary CTA)
+* No additional configuration or sliders
+
+**Why it matters:**
+
+* Encourages exploration without overwhelming the user
+* Makes variation feel intentional rather than accidental
+* Lays groundwork for future draft-based workflows
+
+In practice, this revealed that *small prompt nudges combined with controlled randomness* are sufficient for meaningful variation.
+
+---
+
+### 3. Content-Length Awareness (Avoiding “Summary of a Tweet”)
+
+Summarizing short-form content (tweets, short posts) often leads to awkward or redundant outputs.
+
+**Solution:**
+
+* Detect short content early in the pipeline
+* Skip summarization when unnecessary
+* Generate direct reactions instead of forced summaries
+
+**Impact:**
+
+* Comments feel contextually appropriate
+* No “This post discusses…” syndrome
+* Better alignment with feed-based platforms
+
+This reinforced the idea that **AI pipelines should adapt to content shape**, not treat all inputs equally.
+
+---
+
+### 4. User Draft → AI Enhancement Mode
+
+To support users who already have a rough comment in mind, I introduced a draft-enhancement flow.
+
+**How it works:**
+
+* User pastes a rough comment
+* AI improves clarity, tone, and flow
+* Original intent is preserved
+* Voice profile is still applied
+* Regeneration produces alternate phrasings, not new ideas
+
+**Key constraint:**
+The AI acts as an **editor**, not a generator.
+
+This feature shifted Commentto from “comment generator” to a more flexible **writing assistant**, without complicating the UI or mental model.
+
+---
+
+### 5. Viewport-Aware Content Reading (Feed-Friendly Extraction)
+
+Traditional content extraction works well for blogs, but fails on infinite feeds (LinkedIn, Twitter, etc.).
+
+**Final approach:**
+A progressive extraction strategy:
+
+1. Attempt viewport-aware extraction (partially visible, text-heavy elements)
+2. Fall back to semantic containers (`article`, `main`)
+3. Final fallback to `document.body`
+
+**Why this matters:**
+
+* Feed posts are often only partially visible
+* Strict viewport rules break easily
+* Extraction must be resilient, not “smart but brittle”
+
+This hybrid approach ensures:
+
+* Blogs are summarized correctly
+* Feed posts reflect what the user is actually reading
+* The system never fails silently due to layout differences
+
+---
+
+## Updated Learnings
+
+These iterations reinforced several additional lessons:
+
+* Progressive enhancement beats “clever” single-pass logic
+* Browser extensions expose UX + architecture issues faster than web apps
+* AI quality is as much about *what you don’t do* as what you do
+* Small, well-placed affordances outperform feature-heavy controls
+* Real-world content is messy — systems must degrade gracefully
+
+---
+
+## Closing Reflection
+
+As the feature set expanded, the core philosophy remained unchanged:
+
+* no accounts
+* no persistence beyond the browser
+* no unnecessary abstraction
+* no pretending AI knows more than it does
+
+Commentto evolved from a simple summarization tool into a **practical writing companion**, shaped by real usage rather than theoretical capability.
+
+Every feature was added only after it proved necessary — not because it was possible.
