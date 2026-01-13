@@ -92,29 +92,6 @@ export default function Contact() {
           "
         />
       </section>
-
-      {/* SEPARATE FOOTER — AT BOTTOM OF PAGE */}
-      <footer className="w-full py-3 text-center bg-transparent text-muted text-sm">
-        <span>
-          Built with curiosity by{" "}
-          <a
-            href="/"
-            rel="noopener noreferrer"
-            className="text-teal-300 underline-offset-4 hover:underline"
-          >
-            Aryan
-          </a>{" "}
-          •{" "}
-          <a
-            href="https://github.com/aryanc193/itsugo-portfolio"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-subtle underline-offset-4 hover:underline"
-          >
-            GitHub
-          </a>
-        </span>
-      </footer>
     </>
   );
 }

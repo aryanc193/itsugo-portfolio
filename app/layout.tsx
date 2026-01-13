@@ -11,6 +11,7 @@ import {
   Geist_Mono,
   Montserrat,
 } from "next/font/google";
+import LayoutChrome from "./components/LayoutChrome";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const montserrat = Montserrat({
@@ -81,9 +82,7 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <NavbarWrapper />
-          {/* GLOBAL ORB — persistent across routes */}
-          <GlobalOrb />
-          {children}
+          <LayoutChrome>{children}</LayoutChrome>
         </LanguageProvider>
       </body>
     </html>

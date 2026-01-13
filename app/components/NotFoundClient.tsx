@@ -10,8 +10,6 @@ export default function NotFound() {
   const router = useRouter();
 
   function handleBack() {
-    // If there's a history entry, go back. Otherwise fallback to home.
-    // window.history.length > 1 is a heuristic for "there's something to go back to"
     if (typeof window !== "undefined" && window.history.length > 1) {
       router.back();
     } else {
@@ -20,59 +18,83 @@ export default function NotFound() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center text-center relative overflow-hidden px-4">
-      {/* Glow */}
+    <div
+      data-page="not-found"
+      className="
+        min-h-screen w-full relative overflow-hidden
+        flex flex-col justify-between items-center
+        px-4 py-16
+        text-center
+      "
+    >
+      {/* BACKGROUND GLOW */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120vw] h-[260px]
-                      bg-[radial-gradient(circle_at_center,rgba(0,255,220,0.12),rgba(0,150,255,0.10)_40%,transparent_80%)]
-                      blur-3xl opacity-80 pointer-events-none"
+        className="
+          pointer-events-none absolute inset-0
+          bg-[radial-gradient(circle_at_50%_70%,rgba(0,255,220,0.12),rgba(0,120,255,0.08)_35%,transparent_70%)]
+          blur-3xl
+        "
       />
 
-      <h1 className="text-2xl sm:text-2xl font-semibold tracking-wide text-accent mb-2">
-        404
-      </h1>
+      {/* TOP MESSAGE */}
+      <header className="relative z-10 max-w-xl mt-20">
+        <p className="text-xs tracking-widest text-accent/70 mb-3">ERROR 404</p>
 
-      <p className="text-accent text-sm mb-10">
-        {isJP ? (
-          "「お前ゾロかよ？道が迷ったな」"
-        ) : (
-          <>
-            <span className="italic">“NPCs never question directions…”</span>{" "}
-            but you can.
-          </>
-        )}
-      </p>
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-wide text-accent mb-4">
+          {isJP ? "道に迷ったようだ" : "Looks like you wandered off"}
+        </h1>
 
-      {/* CHARACTERS + ORB */}
-      <div className="flex gap-12 items-center justify-center mb-12">
-        <div className="-mt-15 samurai-walk pixelated scale-[2]" />
-        <div className="mt-25 dog-walk pixelated scale-[2]" />
+        <p className="text-sm sm:text-base text-accent/80 leading-relaxed">
+          {isJP ? (
+            "地図は完璧でも、時々道は外れる。"
+          ) : (
+            <>
+              <span className="italic">“NPCs never question directions…”</span>{" "}
+              but you can.
+            </>
+          )}
+        </p>
+      </header>
 
-        {/* ORB - increase mobile visibility by passing mobileOpacity (optional) */}
+      {/* SCENE */}
+      <div className="relative z-10 flex items-end justify-center gap-10 my-12">
+        <div className="samurai-walk pixelated scale-[2]" />
+        <div className="dog-walk pixelated scale-[2] my-[-43]" />
         <div className="scale-[0.2] opacity-100">
           <Orb mobileOpacity={1} />
         </div>
       </div>
 
-      <div className="flex gap-4">
+      {/* ACTIONS */}
+      <footer className="relative z-10 flex flex-col sm:flex-row gap-4">
         <button
           onClick={handleBack}
-          className="px-6 py-2 rounded-xl border border-white/10 
-             text-foreground bg-background/20 backdrop-blur-sm
-             hover:border-accent hover:text-accent transition cursor-pointer"
+          className="
+            px-6 py-2 rounded-xl
+            border border-white/10
+            bg-background/20 backdrop-blur-sm
+            text-foreground
+            hover:border-accent hover:text-accent
+            transition
+          "
         >
           {isJP ? "戻る" : "Go back"}
         </button>
 
         <a
           href="/"
-          className="px-6 py-2 rounded-xl border border-white/10 
-             text-foreground bg-background/10
-             hover:border-accent hover:text-accent transition"
+          className="
+            px-6 py-2 rounded-xl
+            border border-white/10
+            bg-background/10
+            text-foreground
+            hover:border-accent hover:text-accent
+            transition
+          "
         >
           {isJP ? "ホームへ" : "Home"}
         </a>
-      </div>
+      </footer>
     </div>
   );
 }

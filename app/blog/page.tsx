@@ -1,11 +1,12 @@
 import { getBlogPosts } from "@/app/lib/getBlogPosts";
 import BlogClient from "./BlogClient";
+import Orb from "../components/Orb";
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 
   return (
-    <div className="w-full">
+    <div className="w-full relative z-0 isolate">
       {/* TOP BAR */}
       <div
         className="
@@ -21,12 +22,22 @@ export default async function BlogPage() {
         <div className="flex gap-1.5 sm:gap-2 text-white/70">
           <a
             href="/"
-            className="px-6 py-2 rounded-xl border border-white/10 
-             text-white bg-white/20 backdrop-blur-sm
+            className="px-6 py-2 rounded-xl border border-white/10 bg-gradient-to-r from-white to-hero1
+             backdrop-blur-sm bg-clip-text text-transparent
              hover:border-accent hover:text-accent transition"
           >
             {"Go back to the portfolio"}
           </a>
+          <Orb
+            left="95%"
+            mobileLeft="90%"
+            size="clamp(20px, 2vw, 34px)"
+            float={true}
+            mobileSize="clamp(20px, 2vw, 34px)"
+            mobileOpacity={1}
+            mobileFloat={true}
+            className="-z-10"
+          />
         </div>
       </div>
 
