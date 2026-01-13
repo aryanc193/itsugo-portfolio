@@ -20,16 +20,25 @@ export default function LayoutChrome({
     setIsNotFound(!!notFoundEl);
   }, [pathname]);
 
-  const hideOrb = pathname.startsWith("/blog") || isNotFound;
+  /**
+   * Hide the GLOBAL orb on:
+   * - blog routes
+   * - project case study routes
+   * - not-found page
+   */
+  const hideOrb =
+    pathname.startsWith("/blog") ||
+    pathname.startsWith("/projects") ||
+    isNotFound;
 
   return (
     <>
-      {!hideOrb && <NavbarWrapper />}
+      <NavbarWrapper />
       {!hideOrb && <GlobalOrb />}
 
       {children}
 
-      {/* FOOTER IS NOW EVERYWHERE */}
+      {/* Footer stays everywhere */}
       <PortfolioFooter />
     </>
   );
