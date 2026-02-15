@@ -181,13 +181,13 @@
     "labelEN": "Present & Momentum",
     "labelJP": "現在と前進",
 
-    "descriptionEN": "Focused on shipping production-ready full-stack systems, sharpening technical judgment, and building in short, high-intensity cycles. Open to the right next chapter where ownership and product thinking matter.",
-    "descriptionJP": "現在はプロダクション品質のフルスタック開発に取り組み、技術的判断力を磨きながら、高密度な短期開発サイクルで構築を続けています。オーナーシップとプロダクト思考を重視する次のステップに前向きです。",
+    "descriptionEN": "Working as a bilingual engineer, building production-grade full-stack systems while operating across English and Japanese environments. Expanding into marketing and business strategy, and preparing for JLPT N2 to strengthen cross-cultural product execution. Continuing to ship thoughtful side projects in focused, high-intensity cycles while moving toward deeper ownership and product leadership.",
+    "descriptionJP": "現在はバイリンガルエンジニアとして、英語と日本語の両環境でプロダクション品質のフルスタック開発に取り組んでいます。マーケティングやビジネス戦略の学習を進めながら、JLPT N2取得を目指し、より強いプロダクト実行力を磨いています。高密度な開発サイクルで意義のあるサイドプロジェクトも継続し、オーナーシップとプロダクトリーダーシップの深化を目指しています。",
 
     "projects": [
+      "dev-fun-collab-v1",
+      "Reverie",
       "commentto",
-      "project-mgt-sys",
-      "video-editing-app",
       "itsugo-portfolio"
     ]
   }
